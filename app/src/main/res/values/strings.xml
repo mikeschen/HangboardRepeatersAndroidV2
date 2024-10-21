@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hangboard Repeaters</string>
+
+    <string name="hangtime">HANG TIME</string>
+    <string name="pausetime">PAUSE TIME</string>
+    <string name="numberrounds">NUMBER OF ROUNDS</string>
+    <string name="resttime">REST TIME</string>
+    <string name="numbersets">NUMBER OF SETS</string>
+    <string name="defaultbutton">DEFAULT</string>
+    <string name="powerbutton">POWER</string>
+    <string name="savebutton">SAVE</string>
+    <string name="custbutton">CUSTOM</string>
+    <string name="readybutton">READY</string>
+    <string name="hang">HANG</string>
+    <string name="pause">PAUSE</string>
+    <string name="rest">REST</string>
+    <string name="round">ROUND</string>
+    <string name="set">SET</string>
+    <string name="startbutton">START</string>
+    <string name="done">DONE</string>
+    <string name="logworkout">LOG WORKOUT</string>
+    <string name="start">START</string>
+    <string name="stop">STOP</string>
+    <string name="getready">GET READY </string>
+    <string name="completedworkouts">%2$d COMPLETED WORKOUTS</string>
+    <string name="gradeconverter">Grade Converter</string>
+    <string name="ticklist">Tick List</string>
+    <string name="log">Log</string>
+    <string name="deleteworkouts">Delete Workouts</string>
+    <string name="deleteworkout">Delete Workout</string>
+    <string name="workoutspopup">Are you sure you want to delete all your workouts?</string>
+    <string name="workoutpopup">Are you sure you want to delete this workout?</string>
+    <string name="saveworkouts">Save Workout</string>
+    <string name="prefspopup">Are you sure you want to save this custom workout?</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="grade">Select Grade</string>
+
+    <string name="instructions">
+        \u2022 Be sure to be properly warmed-up before using the fingerboard. Laps first on boulder problems or routes is highly recommended.\n
+        \n \u2022 Starting with a set on the jug holds of the hangboard is also recommended.\n
+        \n \u2022 When hanging on a hold, fingers should be in a half-crimp position. The arms should be in a very slightly bent position, the muscles should be “engaged”.\n
+        \n \u2022 Hang from the hold on the hangboard for the number of seconds you entered.\n
+        \n \u2022 Pause for the number of seconds you entered.\n
+        \n \u2022 Repeat for the number of rounds you entered.\n
+        \n \u2022 Rest for the number of seconds you entered. At least 90 seconds is recommended.\n
+        \n \u2022 Repeat for the number of sets you entered.\n
+        \n \u2022 A recommended workout for beginners is 5 hangs of 8
+        seconds each, with 5 seconds rest between hangs. This is 1 set. You will do a total of 5 sets
+        (so 25 total hangs), resting 3 minutes between each set.\n
+    </string>
+    <string name="instructiontitle">Instructions</string>
+
+    <string name="player_error">Error initializing YouTube player: %s</string>
+    <string name="seek_to">Jump To</string>
+    <string name="seek_to_hint">Seconds</string>
+</resources>
