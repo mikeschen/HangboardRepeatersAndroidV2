@@ -158,28 +158,28 @@
             android:textSize="@dimen/sets_text_size"
             android:textStyle="bold" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/soundButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="6"
-            android:layout_column="0"
-            android:layout_gravity="center_horizontal"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/ic_volume_up_white_36dp" />
+<!--        <android.support.design.widget.FloatingActionButton-->
+<!--            android:id="@+id/soundButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="6"-->
+<!--            android:layout_column="0"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            android:src="@drawable/ic_volume_up_white_36dp" />-->
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/countSoundButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_row="6"
-            android:layout_column="1"
-            android:layout_gravity="center_horizontal"
-            android:backgroundTint="@color/colorSecondaryVariant"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/baseline_timer_off_white_36dp" />
+<!--        <android.support.design.widget.FloatingActionButton-->
+<!--            android:id="@+id/countSoundButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_row="6"-->
+<!--            android:layout_column="1"-->
+<!--            android:layout_gravity="center_horizontal"-->
+<!--            android:backgroundTint="@color/colorSecondaryVariant"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            android:src="@drawable/baseline_timer_off_white_36dp" />-->
 
     </GridLayout>
 
