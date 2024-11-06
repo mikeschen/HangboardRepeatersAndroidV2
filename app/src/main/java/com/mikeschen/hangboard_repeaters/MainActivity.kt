@@ -14,21 +14,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 
 class MainActivity : ComponentActivity() {
-    object Constants {
-        const val KEY_USER_HANG: String = "hang"
-        const val KEY_USER_PAUSE: String = "pause"
-        const val KEY_USER_ROUNDS: String = "rounds"
-        const val KEY_USER_REST: String = "rest"
-        const val KEY_USER_SETS: String = "sets"
-        const val KEY_USER_SIZE: String = "size"
-        const val KEY_USER_WEIGHT: String = "weight"
-        const val SAVED_USER_HANG: String = "savedHang"
-        const val SAVED_USER_PAUSE: String = "savedPause"
-        const val SAVED_USER_ROUNDS: String = "savedRounds"
-        const val SAVED_USER_REST: String = "savedRest"
-        const val SAVED_USER_SETS: String = "savedSets"
-    }
-
     private val mSharedPreferences: SharedPreferences? by lazy {
         getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
     }
@@ -164,7 +149,7 @@ class MainActivity : ComponentActivity() {
 
         builder.setTitle(R.string.saveworkouts)
             .setMessage(R.string.prefspopup)
-            .setPositiveButton("OK") { dialog, which ->
+            .setPositiveButton("OK") { _, _ ->
                 val editor = mSharedPreferences?.edit()
                 editor?.putString(Constants.SAVED_USER_HANG, hangEditText.getText().toString())?.apply();
                 editor?.putString(Constants.SAVED_USER_PAUSE, pauseEditText.getText().toString())?.apply();
@@ -172,7 +157,7 @@ class MainActivity : ComponentActivity() {
                 editor?.putString(Constants.SAVED_USER_REST, restEditText.getText().toString())?.apply();
                 editor?.putString(Constants.SAVED_USER_SETS, setsEditText.getText().toString())?.apply();
             }
-            .setNegativeButton(R.string.cancel) { dialog, which ->
+            .setNegativeButton(R.string.cancel) { _, _ ->
                 // Handle the negative button action
             }
 
