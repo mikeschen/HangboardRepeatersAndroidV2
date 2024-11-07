@@ -7,7 +7,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
-import android.content.Intent
 
 class MainActivity : ComponentActivity() {
     private val workoutSettingsManager by lazy {

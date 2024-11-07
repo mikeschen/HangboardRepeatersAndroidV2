@@ -21,8 +21,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
+import android.util.Log
 
-class TimerActivity : ComponentActivity() {
+class TimerActivity : ComponentActivity(), View.OnClickListener {
     private lateinit var mHangTextView: TextView
     private lateinit var mPauseTextView: TextView
     private lateinit var mRestTextView: TextView
@@ -51,7 +52,9 @@ class TimerActivity : ComponentActivity() {
     var roundCounter: Int = 2
     var newWorkoutSwitch: Boolean = true
     var flipState: Boolean = true
-    var soundSwitch: Boolean = true
+    //TODO: make this true to get sound switch to work like before
+//    var soundSwitch: Boolean = true
+    var soundSwitch: Boolean = false
     var countSoundSwitch: Boolean = false
     var buttonchimeId: Int = 0
     var pausechimeId: Int = 0
@@ -59,7 +62,7 @@ class TimerActivity : ComponentActivity() {
     var endAlarmId: Int = 0
     var fivesecondsId: Int = 0
 
-    //    private static final String TAG = "MyActivity";
+    val tag = "MyAppTag"
     var ourSounds: SoundPool? = null
 
     var timerHandler: Handler = Handler()
@@ -70,7 +73,7 @@ class TimerActivity : ComponentActivity() {
             val countdownDisplay = currentTimer - seconds
             val minutes = countdownDisplay / 60
             val secondsDisplay = countdownDisplay % 60
-            //            Log.d(TAG, "run: " + countdownDisplay);
+            Log.d(tag, "run 🏃‍♀️: " + countdownDisplay);
             if (countSoundSwitch) {
                 if (countdownDisplay == 5) {
                     ourSounds!!.play(fivesecondsId, 0.8f, 0.8f, 1, 0, 1f)
@@ -102,17 +105,17 @@ class TimerActivity : ComponentActivity() {
                     timerText = mHangTextView
                     timerTextView = mHangText
                     flipState = true
-                    mRoundsText!!.text = "$roundCounter/$rounds"
+                    mRoundsText.text = "$roundCounter/$rounds"
                     roundCounter++
                 }
                 if (i == rounds * 2 - 1) {
                     roundCounter = 1
-                    mRoundsText!!.text = "$roundCounter/$rounds"
+                    mRoundsText.text = "$roundCounter/$rounds"
                     currentTimer = rest
                     timerTextView = mRestText
                     timerText = mRestTextView
                     i = -1
-                    mSetsText!!.text = "$counter/$sets"
+                    mSetsText.text = "$counter/$sets"
                     counter++
                     flipState = false
                 }
@@ -159,11 +162,13 @@ class TimerActivity : ComponentActivity() {
         setContentView(R.layout.activity_timer)
 
         mHangTextView = findViewById(R.id.hangTextView)
+        timerText = mHangTextView
+        mHangText = findViewById(R.id.hangText)
+        timerTextView = mHangText
         mPauseTextView = findViewById(R.id.pauseTextView)
         mRestTextView = findViewById(R.id.restTextView)
         mRoundTextView = findViewById(R.id.roundTextView)
         mSetsTextView = findViewById(R.id.setTextView)
-        mHangText = findViewById(R.id.hangText)
         mPauseText = findViewById(R.id.pauseText)
         mRestText = findViewById(R.id.restText)
         mSetsText = findViewById(R.id.setsText)
@@ -172,7 +177,7 @@ class TimerActivity : ComponentActivity() {
 //        mSoundButton = findViewById(R.id.soundButton)
 //        mCountSoundButton = findViewById(R.id.countSoundButton)
 
-//        mStartButton.setOnClickListener(this)
+        mStartButton.setOnClickListener(this)
 //        mSoundButton.setOnClickListener(this)
 //        mCountSoundButton.setOnClickListener(this)
 
@@ -183,12 +188,11 @@ class TimerActivity : ComponentActivity() {
         fade(mPauseText)
         fade(mRestText)
 
-//        val intent = Intent.getIntent()
-//        hang = intent.getIntExtra("hang", 0)
-//        pause = intent.getIntExtra("pause", 0)
-//        rounds = intent.getIntExtra("rounds", 0)
-//        rest = intent.getIntExtra("rest", 0)
-//        sets = intent.getIntExtra("sets", 0)
+        hang = intent.getIntExtra("hang", 0)
+        pause = intent.getIntExtra("pause", 0)
+        rounds = intent.getIntExtra("rounds", 0)
+        rest = intent.getIntExtra("rest", 0)
+        sets = intent.getIntExtra("sets", 0)
         //Mike TODO: see if I need to fix below
 //        timerText = findViewById(R.id.hangTextView)
 //        timerTextView = findViewById(R.id.hangText)
@@ -198,31 +202,31 @@ class TimerActivity : ComponentActivity() {
 //        initializeSoundPool()
     }
 
-//    private fun initializeSoundPool() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            val audioAttributes = AudioAttributes.Builder()
-//                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-//                .setUsage(AudioAttributes.USAGE_GAME)
-//                .build()
-//
-//            ourSounds = SoundPool.Builder()
-//                .setMaxStreams(4)
-//                .setAudioAttributes(audioAttributes)
-//                .build()
-//
+    private fun initializeSoundPool() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val audioAttributes = AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .setUsage(AudioAttributes.USAGE_GAME)
+                .build()
+
+            ourSounds = SoundPool.Builder()
+                .setMaxStreams(4)
+                .setAudioAttributes(audioAttributes)
+                .build()
+
 //            buttonchimeId = ourSounds.load(this, R.raw.hangchime, 1)
 //            pausechimeId = ourSounds.load(this, R.raw.pausechime, 1)
 //            restwarningId = ourSounds.load(this, R.raw.restchime, 1)
 //            endAlarmId = ourSounds.load(this, R.raw.countdownchime, 1)
 //            fivesecondsId = ourSounds.load(this, R.raw.fivesecondschime, 1)
-//        } else {
+        } else {
 //            ourSounds = SoundPool(3, AudioManager.STREAM_MUSIC, 1)
 //            buttonchimeId = ourSounds!!.load(this, R.raw.hangchime, 1)
 //            restwarningId = ourSounds!!.load(this, R.raw.restchime, 1)
 //            endAlarmId = ourSounds!!.load(this, R.raw.countdownchime, 1)
 //            fivesecondsId = ourSounds!!.load(this, R.raw.fivesecondschime, 1)
-//        }
-//    }
+        }
+    }
 
     private fun animateButton() {
         mStartButton.scaleX = 0.96f
@@ -238,9 +242,13 @@ class TimerActivity : ComponentActivity() {
             .setDuration(500)
     }
 
-//    fun onClick(v: View) {
-//        when (v.id) {
-//            (R.id.startButton) -> if (mStartButton!!.text == getString(R.string.logworkout)) {
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.startButton -> {
+                animateButton()
+                startRunnable()
+            }
+//            (R.id.startButton) -> if (mStartButton.text == getString(R.string.logworkout)) {
 //                val intent1: Intent = Intent(
 //                    this,
 //                    CreateLogActivity::class.java
@@ -253,8 +261,9 @@ class TimerActivity : ComponentActivity() {
 //                this.startActivity(intent1)
 //            } else {
 //                animateButton()
+//                startRunnable()
 //            }
-//
+
 //            (R.id.soundButton) -> if (soundSwitch) {
 //                soundSwitch = false
 //                mSoundButton!!.setImageResource(R.drawable.ic_volume_off_white_36dp)
@@ -276,7 +285,7 @@ class TimerActivity : ComponentActivity() {
 //
 //                soundOn.show()
 //            }
-//
+
 //            (R.id.countSoundButton) -> if (countSoundSwitch) {
 //                countSoundSwitch = false
 //                mCountSoundButton!!.setImageResource(R.drawable.baseline_timer_off_white_36dp)
@@ -298,8 +307,8 @@ class TimerActivity : ComponentActivity() {
 //
 //                cntSoundOn.show()
 //            }
-//        }
-//    }
+        }
+    }
 
 //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 //        val inflater: MenuInflater = getMenuInflater()
@@ -356,9 +365,9 @@ class TimerActivity : ComponentActivity() {
                 }
 
                 override fun onFinish() {
-                    if (soundSwitch) {
-                        ourSounds!!.play(buttonchimeId, 0.9f, 0.9f, 1, 0, 1f)
-                    }
+//                    if (soundSwitch) {
+//                        ourSounds!!.play(buttonchimeId, 0.9f, 0.9f, 1, 0, 1f)
+//                    }
                     startTime = System.currentTimeMillis()
                     timerHandler.postDelayed(timerRunnable!!, 0)
                     mStartButton.setText(getString(R.string.stop))
