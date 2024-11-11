@@ -5,13 +5,11 @@ import android.content.Intent
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.SoundPool
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
@@ -19,11 +17,11 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.core.content.ContextCompat
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import com.mikeschen.hangboard_repeaters.helpers.MenuHelper
 
-class TimerActivity : ComponentActivity(), View.OnClickListener {
+class TimerActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mHangTextView: TextView
     private lateinit var mPauseTextView: TextView
     private lateinit var mRestTextView: TextView
@@ -37,6 +35,7 @@ class TimerActivity : ComponentActivity(), View.OnClickListener {
     private lateinit var mStartButton: Button
     private lateinit var mSoundButton: ImageButton
     private lateinit var mCountSoundButton: ImageButton
+    private lateinit var menuHelper: MenuHelper
 
     var timerText: TextView? = null
     var timerTextView: TextView? = null
@@ -158,6 +157,7 @@ class TimerActivity : ComponentActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         setContentView(R.layout.activity_timer)
+        menuHelper = MenuHelper(this)
 
         mHangTextView = findViewById(R.id.hangTextView)
         timerText = mHangTextView
@@ -308,48 +308,19 @@ class TimerActivity : ComponentActivity(), View.OnClickListener {
         }
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        val inflater: MenuInflater = getMenuInflater()
-//        inflater.inflate(R.menu.menu_main, menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return menuHelper.createOptionsMenu(menu, menuInflater)
+    }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.action_instruction -> {
-//                val instructionIntent: Intent = Intent(
-//                    this,
-//                    InstructionActivity::class.java
-//                )
-//                this.startActivity(instructionIntent)
-//            }
-//
-//            R.id.action_log -> {
-//                val logIntent: Intent = Intent(
-//                    this,
-//                    LogActivity::class.java
-//                )
-//                this.startActivity(logIntent)
-//            }
-//
-//            R.id.action_converter -> {
-//                val converterIntent: Intent = Intent(
-//                    this,
-//                    ConverterActivity::class.java
-//                )
-//                this.startActivity(converterIntent)
-//            }
-//
-//            R.id.action_tick -> {
-//                val browserIntent =
-//                    Intent(Intent.ACTION_VIEW, Uri.parse("https://www.mikeschen.com/grypped"))
-//                ContextCompat.startActivity(browserIntent)
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (menuHelper.handleOptionsItemSelected(item)) {
+            true
+        } else {
+            super.onOptionsItemSelected(item)
+        }
+    }
 
-    protected override fun onDestroy() {
+    override fun onDestroy() {
         if (timerRunnable != null) timerHandler.removeCallbacks(timerRunnable!!)
         super.onDestroy()
         ourSounds!!.release()

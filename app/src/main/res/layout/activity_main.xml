@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/hueco"
     android:padding="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+    tools:context=".main.MainActivity">
 
     <GridLayout
         android:layout_width="wrap_content"
@@ -185,7 +185,7 @@
         android:layout_height="match_parent">
 
         <!-- Button 1 -->
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/presetButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -198,7 +198,7 @@
             app:layout_constraintEnd_toStartOf="@id/powerButton"/>
 
         <!-- Button 2 -->
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/powerButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -211,7 +211,7 @@
             app:layout_constraintEnd_toStartOf="@id/custButton"/>
 
         <!-- Button 3 -->
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/custButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -223,7 +223,7 @@
             app:layout_constraintEnd_toStartOf="@id/saveButton"/>
 
         <!-- Button 4 -->
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/saveButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -235,7 +235,7 @@
             app:layout_constraintStart_toEndOf="@id/custButton"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/startButton"
             android:layout_width="0dp"
             android:layout_height="0dp"

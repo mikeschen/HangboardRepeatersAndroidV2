@@ -1,14 +1,20 @@
-package com.mikeschen.hangboard_repeaters
+package com.mikeschen.hangboard_repeaters.main
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import com.mikeschen.hangboard_repeaters.helpers.AlertDialogHelper
+import com.mikeschen.hangboard_repeaters.helpers.MenuHelper
+import com.mikeschen.hangboard_repeaters.R
+import com.mikeschen.hangboard_repeaters.TimerActivity
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     private val workoutSettingsManager by lazy {
         WorkoutSettingsManager(this)
     }
@@ -19,10 +25,13 @@ class MainActivity : ComponentActivity() {
     private lateinit var mRestEditText: EditText
     private lateinit var mSetsEditText: EditText
 
+    private lateinit var menuHelper: MenuHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        menuHelper = MenuHelper(this)
 
         val mHangTimeTextView = findViewById<TextView>(R.id.hangTimeTextView)
         val mPauseTimeTextView = findViewById<TextView>(R.id.pauseTimeTextView)
@@ -112,6 +121,18 @@ class MainActivity : ComponentActivity() {
                 Toast.LENGTH_SHORT
             )
             custom.show()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return menuHelper.createOptionsMenu(menu, menuInflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (menuHelper.handleOptionsItemSelected(item)) {
+            true
+        } else {
+            super.onOptionsItemSelected(item)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.mikeschen.hangboard_repeaters
+package com.mikeschen.hangboard_repeaters.main
 
 import android.content.ContentValues.TAG
 import android.content.Context
