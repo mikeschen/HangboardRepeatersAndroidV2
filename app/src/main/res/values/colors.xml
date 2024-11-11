@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00a7e1</color>
-    <color name="colorSecondaryVariant">#DD2C00</color>
-    <color name="colorPrimaryDark">#121212</color>
-    <color name="colorPrimaryLight">#e81f76</color>
-    <color name="colorPrimaryText">#121212</color>
-    <color name="colorSecondaryText">#FFFFFF</color>
-    <color name="colorAccent">#00a7e1</color>
-    <color name="colorSecondary">#e81f76</color>
-    <color name="colorPrimaryVariant">#8D6E63</color>
-    <color name="colorOffWhite">#f7f7f7</color>
-    <color name="black">#000000</color>
+    <!-- Primary Colors -->
+    <color name="colorPrimary">#007BA7</color> <!-- Softer blue -->
+    <color name="colorPrimaryDark">#005073</color> <!-- Darker variant of primary -->
+    <color name="colorPrimaryLight">#4FC3DF</color> <!-- Very light, complementary to primary -->
+
+    <!-- Secondary Colors -->
+    <color name="colorSecondary">#FF6F61</color> <!-- Softened red-pink -->
+    <color name="colorSecondaryVariant">#FF8A65</color> <!-- Lighter, warm variant for highlights -->
+
+    <!-- Accent Colors -->
+    <color name="colorAccent">#007BA7</color> <!-- Match primary color for consistency -->
+
+    <!-- Text Colors -->
+    <color name="colorPrimaryText">#121212</color> <!-- Dark, accessible on light backgrounds -->
+    <color name="colorSecondaryText">#FFFFFF</color> <!-- Light text for dark backgrounds -->
+
+    <!-- Backgrounds -->
+    <color name="colorOffWhite">#FAFAFA</color> <!-- Softer off-white, calming background -->
+    <color name="black">#000000</color> <!-- Pure black for contrast -->
+
+    <!-- Variant for Secondary Elements -->
+    <color name="colorPrimaryVariant">#546E7A</color> <!-- Muted gray-blue for secondary UI elements -->
+
 </resources>

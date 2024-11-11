@@ -52,9 +52,7 @@ class TimerActivity : ComponentActivity(), View.OnClickListener {
     var roundCounter: Int = 2
     var newWorkoutSwitch: Boolean = true
     var flipState: Boolean = true
-    //TODO: make this true to get sound switch to work like before
-//    var soundSwitch: Boolean = true
-    var soundSwitch: Boolean = false
+    var soundSwitch: Boolean = true
     var countSoundSwitch: Boolean = false
     var buttonchimeId: Int = 0
     var pausechimeId: Int = 0
@@ -174,12 +172,12 @@ class TimerActivity : ComponentActivity(), View.OnClickListener {
         mSetsText = findViewById(R.id.setsText)
         mRoundsText = findViewById(R.id.roundsText)
         mStartButton = findViewById(R.id.startButton)
-//        mSoundButton = findViewById(R.id.soundButton)
-//        mCountSoundButton = findViewById(R.id.countSoundButton)
+        mSoundButton = findViewById(R.id.soundButton)
+        mCountSoundButton = findViewById(R.id.countSoundButton)
 
         mStartButton.setOnClickListener(this)
-//        mSoundButton.setOnClickListener(this)
-//        mCountSoundButton.setOnClickListener(this)
+        mSoundButton.setOnClickListener(this)
+        mCountSoundButton.setOnClickListener(this)
 
         fade(mHangTextView)
         fade(mPauseTextView)
@@ -199,7 +197,7 @@ class TimerActivity : ComponentActivity(), View.OnClickListener {
         currentTimer = hang
         mRoundsText.text = "1/$rounds"
         mSetsText.text = "1/$sets"
-//        initializeSoundPool()
+        initializeSoundPool()
     }
 
     private fun initializeSoundPool() {
@@ -214,17 +212,17 @@ class TimerActivity : ComponentActivity(), View.OnClickListener {
                 .setAudioAttributes(audioAttributes)
                 .build()
 
-//            buttonchimeId = ourSounds.load(this, R.raw.hangchime, 1)
-//            pausechimeId = ourSounds.load(this, R.raw.pausechime, 1)
-//            restwarningId = ourSounds.load(this, R.raw.restchime, 1)
-//            endAlarmId = ourSounds.load(this, R.raw.countdownchime, 1)
-//            fivesecondsId = ourSounds.load(this, R.raw.fivesecondschime, 1)
+            buttonchimeId = ourSounds!!.load(this, R.raw.hangchime, 1)
+            pausechimeId = ourSounds!!.load(this, R.raw.pausechime, 1)
+            restwarningId = ourSounds!!.load(this, R.raw.restchime, 1)
+            endAlarmId = ourSounds!!.load(this, R.raw.countdownchime, 1)
+            fivesecondsId = ourSounds!!.load(this, R.raw.fivesecondschime, 1)
         } else {
-//            ourSounds = SoundPool(3, AudioManager.STREAM_MUSIC, 1)
-//            buttonchimeId = ourSounds!!.load(this, R.raw.hangchime, 1)
-//            restwarningId = ourSounds!!.load(this, R.raw.restchime, 1)
-//            endAlarmId = ourSounds!!.load(this, R.raw.countdownchime, 1)
-//            fivesecondsId = ourSounds!!.load(this, R.raw.fivesecondschime, 1)
+            ourSounds = SoundPool(3, AudioManager.STREAM_MUSIC, 1)
+            buttonchimeId = ourSounds!!.load(this, R.raw.hangchime, 1)
+            restwarningId = ourSounds!!.load(this, R.raw.restchime, 1)
+            endAlarmId = ourSounds!!.load(this, R.raw.countdownchime, 1)
+            fivesecondsId = ourSounds!!.load(this, R.raw.fivesecondschime, 1)
         }
     }
 
@@ -248,7 +246,7 @@ class TimerActivity : ComponentActivity(), View.OnClickListener {
                 animateButton()
                 startRunnable()
             }
-//            (R.id.startButton) -> if (mStartButton.text == getString(R.string.logworkout)) {
+            (R.id.startButton) -> if (mStartButton.text == getString(R.string.logworkout)) {
 //                val intent1: Intent = Intent(
 //                    this,
 //                    CreateLogActivity::class.java
@@ -259,54 +257,54 @@ class TimerActivity : ComponentActivity(), View.OnClickListener {
 //                intent1.putExtra("rest", rest)
 //                intent1.putExtra("sets", sets)
 //                this.startActivity(intent1)
-//            } else {
-//                animateButton()
-//                startRunnable()
-//            }
+            } else {
+                animateButton()
+                startRunnable()
+            }
 
-//            (R.id.soundButton) -> if (soundSwitch) {
-//                soundSwitch = false
-//                mSoundButton!!.setImageResource(R.drawable.ic_volume_off_white_36dp)
-//                val soundOff = Toast.makeText(
-//                    getApplicationContext(),
-//                    "Sound Off",
-//                    Toast.LENGTH_SHORT
-//                )
-//
-//                soundOff.show()
-//            } else {
-//                soundSwitch = true
-//                mSoundButton!!.setImageResource(R.drawable.ic_volume_up_white_36dp)
-//                val soundOn = Toast.makeText(
-//                    getApplicationContext(),
-//                    "Sound On",
-//                    Toast.LENGTH_SHORT
-//                )
-//
-//                soundOn.show()
-//            }
+            (R.id.soundButton) -> if (soundSwitch) {
+                soundSwitch = false
+                mSoundButton!!.setImageResource(R.drawable.ic_volume_off_white_36dp)
+                val soundOff = Toast.makeText(
+                    getApplicationContext(),
+                    "Sound Off",
+                    Toast.LENGTH_SHORT
+                )
 
-//            (R.id.countSoundButton) -> if (countSoundSwitch) {
-//                countSoundSwitch = false
-//                mCountSoundButton!!.setImageResource(R.drawable.baseline_timer_off_white_36dp)
-//                val cntSoundOff = Toast.makeText(
-//                    getApplicationContext(),
-//                    "Countdown Sounds Off",
-//                    Toast.LENGTH_SHORT
-//                )
-//
-//                cntSoundOff.show()
-//            } else {
-//                countSoundSwitch = true
-//                mCountSoundButton!!.setImageResource(R.drawable.baseline_av_timer_white_36dp)
-//                val cntSoundOn = Toast.makeText(
-//                    getApplicationContext(),
-//                    "Countdown Sounds On",
-//                    Toast.LENGTH_SHORT
-//                )
-//
-//                cntSoundOn.show()
-//            }
+                soundOff.show()
+            } else {
+                soundSwitch = true
+                mSoundButton!!.setImageResource(R.drawable.ic_volume_up_white_36dp)
+                val soundOn = Toast.makeText(
+                    getApplicationContext(),
+                    "Sound On",
+                    Toast.LENGTH_SHORT
+                )
+
+                soundOn.show()
+            }
+
+            (R.id.countSoundButton) -> if (countSoundSwitch) {
+                countSoundSwitch = false
+                mCountSoundButton!!.setImageResource(R.drawable.baseline_timer_off_white_36dp)
+                val cntSoundOff = Toast.makeText(
+                    getApplicationContext(),
+                    "Countdown Sounds Off",
+                    Toast.LENGTH_SHORT
+                )
+
+                cntSoundOff.show()
+            } else {
+                countSoundSwitch = true
+                mCountSoundButton!!.setImageResource(R.drawable.baseline_av_timer_white_36dp)
+                val cntSoundOn = Toast.makeText(
+                    getApplicationContext(),
+                    "Countdown Sounds On",
+                    Toast.LENGTH_SHORT
+                )
+
+                cntSoundOn.show()
+            }
         }
     }
 
@@ -365,9 +363,9 @@ class TimerActivity : ComponentActivity(), View.OnClickListener {
                 }
 
                 override fun onFinish() {
-//                    if (soundSwitch) {
-//                        ourSounds!!.play(buttonchimeId, 0.9f, 0.9f, 1, 0, 1f)
-//                    }
+                    if (soundSwitch) {
+                        ourSounds!!.play(buttonchimeId, 0.9f, 0.9f, 1, 0, 1f)
+                    }
                     startTime = System.currentTimeMillis()
                     timerHandler.postDelayed(timerRunnable!!, 0)
                     mStartButton.setText(getString(R.string.stop))
