@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/jan"
+    android:padding="@dimen/activity_vertical_margin">
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="top|center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/gridLayoutStart">
+
+        <TextView
+            android:id="@+id/sizeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:padding="3dp"
+            android:text="Edge Size"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/colorSecondaryVariant"
+            android:textSize="@dimen/timer_textview"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_height"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/sizeEditText"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:hint="mm"
+            android:background="@color/colorSecondaryText"
+            android:padding="3dp"
+            android:layout_margin="5dp"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/weightTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:padding="3dp"
+            android:text="Added/Subtracted Weight"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/timer_textview"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_height"
+            android:inputType="phone"
+            android:ems="10"
+            android:id="@+id/weightEditText"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:hint="weight"
+            android:background="@color/colorSecondaryText"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:padding="3dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_horizontal" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_row="4"
+            android:layout_column="0"
+            >
+            <RadioButton android:id="@+id/lbsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lbs"
+                android:textSize="20sp"
+                android:textColor="@color/colorOffWhite"
+                android:buttonTint="@color/colorAccent"
+                />
+            <RadioButton android:id="@+id/kgButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="kg"
+                android:textSize="20sp"
+                android:textColor="@color/colorOffWhite"
+                android:buttonTint="@color/colorAccent"/>
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/notesTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_row="5"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:padding="3dp"
+            android:text="Notes"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/colorPrimaryLight"
+            android:textSize="@dimen/timer_textview"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_height"
+            android:ems="10"
+            android:id="@+id/notesEditText"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:hint="notes"
+            android:background="@color/colorSecondaryText"
+            android:layout_row="6"
+            android:layout_column="0"
+            android:padding="3dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_horizontal"
+            android:inputType="textImeMultiLine" />
+
+    </GridLayout>
+
+    <GridLayout
+        android:id="@+id/page_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        >
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/logButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:layout_columnSpan="2"
+            android:background="@drawable/buttonprimary"
+            android:elevation="2dp"
+            android:text="Log"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+    </GridLayout>
+
+</RelativeLayout>

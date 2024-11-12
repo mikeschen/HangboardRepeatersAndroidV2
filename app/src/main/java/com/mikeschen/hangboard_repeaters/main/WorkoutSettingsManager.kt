@@ -3,6 +3,7 @@ package com.mikeschen.hangboard_repeaters.main
 import android.content.Context
 import android.content.SharedPreferences
 import android.widget.EditText
+import com.mikeschen.hangboard_repeaters.helpers.Constants
 
 class WorkoutSettingsManager(context: Context) {
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)

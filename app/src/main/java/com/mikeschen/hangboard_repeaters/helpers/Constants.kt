@@ -1,4 +1,4 @@
-package com.mikeschen.hangboard_repeaters.main
+package com.mikeschen.hangboard_repeaters.helpers
 
 object Constants {
     const val KEY_USER_HANG = "hang"

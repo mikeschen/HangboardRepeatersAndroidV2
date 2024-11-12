@@ -16,6 +16,7 @@ import android.widget.Toast
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mikeschen.hangboard_repeaters.helpers.MenuHelper
+import com.mikeschen.hangboard_repeaters.logging.CreateLogActivity
 
 class TimerActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mHangTextView: TextView
@@ -63,7 +64,6 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
             val minutes = countdownDisplay / 60
             val secondsDisplay = countdownDisplay % 60
 
-            Log.d(tag, "run 🏃‍♀️: " + countdownDisplay);
             if (countSoundSwitch && countdownDisplay == 3  && !hasPlayedSound) {
                 soundManager.playSound(soundManager.threeSecondsId, 0.9f)
                 hasPlayedSound = true
@@ -210,25 +210,21 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
+        Log.d(tag, "the text 🏃‍♀️: " + mStartButton.text)
         when (v.id) {
             R.id.startButton -> {
-                animateButton()
-                startRunnable()
-            }
-            (R.id.startButton) -> if (mStartButton.text == getString(R.string.logworkout)) {
-//                val intent1: Intent = Intent(
-//                    this,
-//                    CreateLogActivity::class.java
-//                )
-//                intent1.putExtra("hang", hang)
-//                intent1.putExtra("pause", pause)
-//                intent1.putExtra("rounds", rounds)
-//                intent1.putExtra("rest", rest)
-//                intent1.putExtra("sets", sets)
-//                this.startActivity(intent1)
-            } else {
-                animateButton()
-                startRunnable()
+                if (mStartButton.text == getString(R.string.logworkout)) {
+                    val intent = Intent(this, CreateLogActivity::class.java)
+                    intent.putExtra("hang", hang)
+                    intent.putExtra("pause", pause)
+                    intent.putExtra("rounds", rounds)
+                    intent.putExtra("rest", rest)
+                    intent.putExtra("sets", sets)
+                    startActivity(intent)
+                } else {
+                    animateButton()
+                    startRunnable()
+                }
             }
 
             (R.id.soundButton) -> if (soundSwitch) {
