@@ -2,10 +2,6 @@ package com.mikeschen.hangboard_repeaters
 
 import android.content.Context
 import android.content.Intent
-import android.media.AudioAttributes
-import android.media.AudioManager
-import android.media.SoundPool
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -36,6 +32,7 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mSoundButton: ImageButton
     private lateinit var mCountSoundButton: ImageButton
     private lateinit var menuHelper: MenuHelper
+    private lateinit var soundManager: SoundManager
 
     var timerText: TextView? = null
     var timerTextView: TextView? = null
@@ -53,14 +50,9 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
     var flipState: Boolean = true
     var soundSwitch: Boolean = true
     var countSoundSwitch: Boolean = false
-    var buttonchimeId: Int = 0
-    var pausechimeId: Int = 0
-    var restwarningId: Int = 0
-    var endAlarmId: Int = 0
-    var fivesecondsId: Int = 0
+    private var hasPlayedSound = false
 
     val tag = "MyAppTag"
-    var ourSounds: SoundPool? = null
 
     var timerHandler: Handler = Handler()
     var timerRunnable: Runnable? = object : Runnable {
@@ -70,11 +62,14 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
             val countdownDisplay = currentTimer - seconds
             val minutes = countdownDisplay / 60
             val secondsDisplay = countdownDisplay % 60
+
             Log.d(tag, "run 🏃‍♀️: " + countdownDisplay);
-            if (countSoundSwitch) {
-                if (countdownDisplay == 5) {
-                    ourSounds!!.play(fivesecondsId, 0.8f, 0.8f, 1, 0, 1f)
-                }
+            if (countSoundSwitch && countdownDisplay == 3  && !hasPlayedSound) {
+                soundManager.playSound(soundManager.threeSecondsId, 0.9f)
+                hasPlayedSound = true
+            }
+            if (countdownDisplay != 3) {
+                hasPlayedSound = false
             }
             if (seconds == currentTimer) {
                 timerTextView!!.text = String.format("%d:%02d", 0, 0)
@@ -85,11 +80,11 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
                 i++
                 if (soundSwitch) {
                     if (i == rounds * 2 - 1) {
-                        ourSounds!!.play(restwarningId, 0.8f, 0.8f, 1, 0, 1f)
+                        soundManager.playSound(soundManager.restWarningId, 0.8f)
                     } else if (flipState) {
-                        ourSounds!!.play(pausechimeId, 0.8f, 0.8f, 1, 0, 1f)
+                        soundManager.playSound(soundManager.pauseChimeId, 0.8f)
                     } else {
-                        ourSounds!!.play(buttonchimeId, 0.9f, 0.9f, 1, 0, 1f)
+                        soundManager.playSound(soundManager.buttonChimeId, 0.9f)
                     }
                 }
                 if (flipState) {
@@ -119,7 +114,7 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
                 if (counter - 2 == sets) {
                     timerHandler.removeCallbacks(this)
                     if (soundSwitch) {
-                        ourSounds!!.play(endAlarmId, 0.7f, 0.7f, 1, 0, 1f)
+                        soundManager.playSound(soundManager.endAlarmId, 0.7f)
                     }
                     mSetsText.setText(getString(R.string.done))
                     fade(mRoundTextView)
@@ -158,6 +153,7 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         setContentView(R.layout.activity_timer)
         menuHelper = MenuHelper(this)
+        soundManager = SoundManager(this)
 
         mHangTextView = findViewById(R.id.hangTextView)
         timerText = mHangTextView
@@ -197,33 +193,6 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
         currentTimer = hang
         mRoundsText.text = "1/$rounds"
         mSetsText.text = "1/$sets"
-        initializeSoundPool()
-    }
-
-    private fun initializeSoundPool() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val audioAttributes = AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .setUsage(AudioAttributes.USAGE_GAME)
-                .build()
-
-            ourSounds = SoundPool.Builder()
-                .setMaxStreams(4)
-                .setAudioAttributes(audioAttributes)
-                .build()
-
-            buttonchimeId = ourSounds!!.load(this, R.raw.hangchime, 1)
-            pausechimeId = ourSounds!!.load(this, R.raw.pausechime, 1)
-            restwarningId = ourSounds!!.load(this, R.raw.restchime, 1)
-            endAlarmId = ourSounds!!.load(this, R.raw.countdownchime, 1)
-            fivesecondsId = ourSounds!!.load(this, R.raw.fivesecondschime, 1)
-        } else {
-            ourSounds = SoundPool(3, AudioManager.STREAM_MUSIC, 1)
-            buttonchimeId = ourSounds!!.load(this, R.raw.hangchime, 1)
-            restwarningId = ourSounds!!.load(this, R.raw.restchime, 1)
-            endAlarmId = ourSounds!!.load(this, R.raw.countdownchime, 1)
-            fivesecondsId = ourSounds!!.load(this, R.raw.fivesecondschime, 1)
-        }
     }
 
     private fun animateButton() {
@@ -264,7 +233,7 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
 
             (R.id.soundButton) -> if (soundSwitch) {
                 soundSwitch = false
-                mSoundButton!!.setImageResource(R.drawable.ic_volume_off_white_36dp)
+                mSoundButton.setImageResource(R.drawable.ic_volume_off_white_36dp)
                 val soundOff = Toast.makeText(
                     getApplicationContext(),
                     "Sound Off",
@@ -274,7 +243,7 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
                 soundOff.show()
             } else {
                 soundSwitch = true
-                mSoundButton!!.setImageResource(R.drawable.ic_volume_up_white_36dp)
+                mSoundButton.setImageResource(R.drawable.ic_volume_up_white_36dp)
                 val soundOn = Toast.makeText(
                     getApplicationContext(),
                     "Sound On",
@@ -286,7 +255,7 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
 
             (R.id.countSoundButton) -> if (countSoundSwitch) {
                 countSoundSwitch = false
-                mCountSoundButton!!.setImageResource(R.drawable.baseline_timer_off_white_36dp)
+                mCountSoundButton.setImageResource(R.drawable.baseline_timer_off_white_36dp)
                 val cntSoundOff = Toast.makeText(
                     getApplicationContext(),
                     "Countdown Sounds Off",
@@ -296,7 +265,7 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
                 cntSoundOff.show()
             } else {
                 countSoundSwitch = true
-                mCountSoundButton!!.setImageResource(R.drawable.baseline_av_timer_white_36dp)
+                mCountSoundButton.setImageResource(R.drawable.baseline_av_timer_white_36dp)
                 val cntSoundOn = Toast.makeText(
                     getApplicationContext(),
                     "Countdown Sounds On",
@@ -308,22 +277,10 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return menuHelper.createOptionsMenu(menu, menuInflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (menuHelper.handleOptionsItemSelected(item)) {
-            true
-        } else {
-            super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onDestroy() {
         if (timerRunnable != null) timerHandler.removeCallbacks(timerRunnable!!)
         super.onDestroy()
-        ourSounds!!.release()
+        soundManager.release()
     }
 
     fun startRunnable() {
@@ -335,7 +292,7 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
 
                 override fun onFinish() {
                     if (soundSwitch) {
-                        ourSounds!!.play(buttonchimeId, 0.9f, 0.9f, 1, 0, 1f)
+                        soundManager.playSound(soundManager.buttonChimeId, 0.9f)
                     }
                     startTime = System.currentTimeMillis()
                     timerHandler.postDelayed(timerRunnable!!, 0)
@@ -353,6 +310,19 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
                 timerHandler.postDelayed(timerRunnable!!, 0)
                 mStartButton.setText(getString(R.string.stop))
             }
+        }
+    }
+
+    // Dropdown Menu
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return menuHelper.createOptionsMenu(menu, menuInflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (menuHelper.handleOptionsItemSelected(item)) {
+            true
+        } else {
+            super.onOptionsItemSelected(item)
         }
     }
 }
