@@ -1,10 +1,11 @@
+package com.mikeschen.hangboard_repeaters.logging
+
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import com.mikeschen.hangboard_repeaters.helpers.MySQLiteHelper
-import com.mikeschen.hangboard_repeaters.logging.Days
 
 class DaysDataSource(context: Context?) {
     private var database: SQLiteDatabase? = null
@@ -94,3 +95,4 @@ class DaysDataSource(context: Context?) {
         return log
     }
 }
+

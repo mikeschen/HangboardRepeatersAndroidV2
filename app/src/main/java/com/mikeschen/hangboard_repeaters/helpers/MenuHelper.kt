@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.mikeschen.hangboard_repeaters.R
 import com.mikeschen.hangboard_repeaters.InstructionActivity
+import com.mikeschen.hangboard_repeaters.logging.LogActivity
 
 class MenuHelper(private val context: Context) {
 
@@ -24,9 +25,8 @@ class MenuHelper(private val context: Context) {
                 true
             }
             R.id.action_log -> {
-                // Uncomment and replace with actual intent if needed
-                // val logIntent = Intent(context, LogActivity::class.java)
-                // context.startActivity(logIntent)
+                 val logIntent = Intent(context, LogActivity::class.java)
+                 context.startActivity(logIntent)
                 true
             }
             R.id.action_converter -> {

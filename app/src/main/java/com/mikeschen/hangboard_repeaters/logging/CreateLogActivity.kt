@@ -1,6 +1,6 @@
 package com.mikeschen.hangboard_repeaters.logging
 
-import DaysDataSource
+import com.mikeschen.hangboard_repeaters.logging.DaysDataSource
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
