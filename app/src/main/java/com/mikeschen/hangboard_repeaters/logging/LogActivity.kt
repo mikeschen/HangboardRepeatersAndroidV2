@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.app.AlertDialog
-import android.view.Menu
 import android.view.View
 import android.widget.TextView
 import com.mikeschen.hangboard_repeaters.R
@@ -47,11 +46,6 @@ class LogActivity : AppCompatActivity() {
         homeButton.setOnClickListener {
             homeButton(it)
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
     }
 
     private fun deleteOneItem(position: Int) {

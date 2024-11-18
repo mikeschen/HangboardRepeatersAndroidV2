@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/hueco"
     android:padding="@dimen/activity_vertical_margin"
+    android:fitsSystemWindows="true"
     tools:context=".main.MainActivity">
 
     <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="top|center"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="48dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/gridLayoutStart">
 
@@ -246,8 +247,7 @@
             android:text="@string/readybutton"
             android:textSize="28sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/presetButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintWidth_percent="0.6"
