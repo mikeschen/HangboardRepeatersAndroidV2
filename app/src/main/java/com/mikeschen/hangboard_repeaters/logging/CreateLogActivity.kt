@@ -1,8 +1,6 @@
 package com.mikeschen.hangboard_repeaters.logging
 
-import com.mikeschen.hangboard_repeaters.logging.DaysDataSource
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -74,10 +72,10 @@ class CreateLogActivity : AppCompatActivity(), View.OnClickListener {
         size = mSharedPreferences.getString(Constants.KEY_USER_SIZE, null)
         weight = mSharedPreferences.getString(Constants.KEY_USER_WEIGHT, null)
         if (size != null) {
-            mSizeEditText!!.setText(size)
+            mSizeEditText.setText(size)
         }
         if (weight != null) {
-            mWeightEditText!!.setText(weight)
+            mWeightEditText.setText(weight)
         }
         loadRadioButtons()
     }
@@ -100,22 +98,22 @@ class CreateLogActivity : AppCompatActivity(), View.OnClickListener {
                 val dateFormat: DateFormat = SimpleDateFormat("MM/dd/yyyy - hh:mm a -")
                 val date = Date()
                 val formattedDate = dateFormat.format(date)
-                mSharedPreferencesEditor!!.putString(
+                mSharedPreferencesEditor.putString(
                     Constants.KEY_USER_SIZE,
-                    mSizeEditText!!.text.toString()
+                    mSizeEditText.text.toString()
                 ).apply()
-                mSharedPreferencesEditor!!.putString(
+                mSharedPreferencesEditor.putString(
                     Constants.KEY_USER_WEIGHT,
-                    mWeightEditText!!.text.toString()
+                    mWeightEditText.text.toString()
                 ).apply()
-                if (!mSizeEditText!!.text.toString().isEmpty()) {
-                    sizeLog = " Hold Size: " + mSizeEditText!!.text.toString() + "mm,"
+                if (!mSizeEditText.text.toString().isEmpty()) {
+                    sizeLog = " Hold Size: " + mSizeEditText.text.toString() + "mm,"
                 }
-                if (!mWeightEditText!!.text.toString().isEmpty()) {
-                    weightLog = " Weight: " + mWeightEditText!!.text.toString() + weightUnit + ","
+                if (!mWeightEditText.text.toString().isEmpty()) {
+                    weightLog = " Weight: " + mWeightEditText.text.toString() + weightUnit + ","
                 }
-                if (!mNotesEditText!!.text.toString().isEmpty()) {
-                    noteLog = " - Notes: " + mNotesEditText!!.text.toString()
+                if (!mNotesEditText.text.toString().isEmpty()) {
+                    noteLog = " - Notes: " + mNotesEditText.text.toString()
                 }
                 val workOutStats =
                     " Hang: $hang, Pause: $pause, Rounds: $rounds, Rest: $rest, Sets: $sets"
@@ -132,17 +130,17 @@ class CreateLogActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun saveRadioButtons() {
+    private fun saveRadioButtons() {
         mSharedPreferences = getSharedPreferences("user_preferences", Context.MODE_PRIVATE)
         val editor = mSharedPreferences.edit()
-        editor.putBoolean("Lbs", mLbsButton!!.isChecked)
-        editor.putBoolean("Kg", mKgButton!!.isChecked)
+        editor.putBoolean("Lbs", mLbsButton.isChecked)
+        editor.putBoolean("Kg", mKgButton.isChecked)
         editor.apply()
     }
 
-    fun loadRadioButtons() {
+    private fun loadRadioButtons() {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        mLbsButton!!.isChecked = mSharedPreferences.getBoolean("Lbs", false)
-        mKgButton!!.isChecked = mSharedPreferences.getBoolean("Kg", false)
+        mLbsButton.isChecked = mSharedPreferences.getBoolean("Lbs", false)
+        mKgButton.isChecked = mSharedPreferences.getBoolean("Kg", false)
     }
 }

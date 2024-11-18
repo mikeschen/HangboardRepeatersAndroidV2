@@ -1,8 +1,9 @@
-package com.mikeschen.hangboard_repeaters
+package com.mikeschen.hangboard_repeaters.helpers
 
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.SoundPool
+import com.mikeschen.hangboard_repeaters.R
 
 class SoundManager(context: Context) {
     private val ourSounds: SoundPool

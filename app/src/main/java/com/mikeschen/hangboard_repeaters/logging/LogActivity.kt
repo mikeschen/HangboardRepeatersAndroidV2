@@ -16,7 +16,7 @@ import com.mikeschen.hangboard_repeaters.main.MainActivity
 class LogActivity : AppCompatActivity() {
     private var datasource: DaysDataSource? = null
     private lateinit var mCompletedTextView: TextView
-    var mContext: Context? = null
+    private var mContext: Context? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: DaysAdapter
     private var recordCount: Int = 0
@@ -70,7 +70,7 @@ class LogActivity : AppCompatActivity() {
         builder.show()
     }
 
-    fun deleteButton(target: View?) {
+    private fun deleteButton(target: View?) {
         val builder = AlertDialog.Builder(this)
             .setTitle(getString(R.string.deleteworkouts))
             .setMessage(getString(R.string.workoutspopup))
@@ -84,7 +84,7 @@ class LogActivity : AppCompatActivity() {
         builder.show()
     }
 
-    fun homeButton(target: View?) {
+    private fun homeButton(target: View?) {
         startActivity(Intent(this, MainActivity::class.java))
     }
 

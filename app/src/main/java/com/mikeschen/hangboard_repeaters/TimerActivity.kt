@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -16,6 +17,7 @@ import android.widget.Toast
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mikeschen.hangboard_repeaters.helpers.MenuHelper
+import com.mikeschen.hangboard_repeaters.helpers.SoundManager
 import com.mikeschen.hangboard_repeaters.logging.CreateLogActivity
 
 class TimerActivity : AppCompatActivity(), View.OnClickListener {
@@ -55,7 +57,8 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
 
     val tag = "MyAppTag"
 
-    var timerHandler: Handler = Handler()
+    var timerHandler: Handler = Handler(Looper.getMainLooper())
+
     var timerRunnable: Runnable? = object : Runnable {
         override fun run() {
             val millis = System.currentTimeMillis() - startTime
@@ -116,10 +119,10 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
                     if (soundSwitch) {
                         soundManager.playSound(soundManager.endAlarmId, 0.7f)
                     }
-                    mSetsText.setText(getString(R.string.done))
+                    mSetsText.text = getString(R.string.done)
                     fade(mRoundTextView)
                     fade(mRoundsText)
-                    mStartButton.setText(getString(R.string.logworkout))
+                    mStartButton.text = getString(R.string.logworkout)
                 }
             } else {
                 timerText!!.animate()
@@ -231,7 +234,7 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
                 soundSwitch = false
                 mSoundButton.setImageResource(R.drawable.ic_volume_off_white_36dp)
                 val soundOff = Toast.makeText(
-                    getApplicationContext(),
+                    applicationContext,
                     "Sound Off",
                     Toast.LENGTH_SHORT
                 )

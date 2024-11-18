@@ -5,10 +5,10 @@ import android.content.Intent
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import com.mikeschen.hangboard_repeaters.R
 import com.mikeschen.hangboard_repeaters.InstructionActivity
 import com.mikeschen.hangboard_repeaters.logging.LogActivity
+import com.mikeschen.hangboard_repeaters.ConverterActivity
 
 class MenuHelper(private val context: Context) {
 
@@ -30,9 +30,8 @@ class MenuHelper(private val context: Context) {
                 true
             }
             R.id.action_converter -> {
-                // Uncomment and replace with actual intent if needed
-                // val converterIntent = Intent(context, ConverterActivity::class.java)
-                // context.startActivity(converterIntent)
+                 val converterIntent = Intent(context, ConverterActivity::class.java)
+                 context.startActivity(converterIntent)
                 true
             }
             else -> false
