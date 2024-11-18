@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mikeschen.hangboard_repeaters.helpers.Constants
 
 class ConverterActivity : AppCompatActivity(), View.OnClickListener {
+
     private lateinit var mGradeConverterTextView: TextView
     private lateinit var mHuecoButton: TextView
     private lateinit var mFontButton: TextView
@@ -18,29 +19,34 @@ class ConverterActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mFrenchButton: TextView
     private lateinit var mUiaaButton: TextView
 
-    val hueco = Constants.hueco
-    val huecoMenu = Constants.huecoMenu
-    val fontMenu = Constants.fontMenu
-    val font = Constants.font
-    val yds = Constants.yds
-    val french = Constants.french
-    val uiaa = Constants.uiaa
+    private val gradeMapping = mapOf(
+        GradeType.HUECO to Pair(Constants.hueco, Constants.huecoMenu),
+        GradeType.FONT to Pair(Constants.font, Constants.fontMenu),
+        GradeType.YDS to Pair(Constants.yds, Constants.yds),
+        GradeType.FRENCH to Pair(Constants.french, Constants.french),
+        GradeType.UIAA to Pair(Constants.uiaa, Constants.uiaa)
+    )
 
-    private var universalGrades: ArrayList<Int> = ArrayList()
-    private var mContext: Context? = null
+    private val universalGrades = ArrayList<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_converter)
-        mContext = this
 
+        initViews()
+        setButtonListeners()
+    }
+
+    private fun initViews() {
         mGradeConverterTextView = findViewById(R.id.gradeConverterTextView)
         mHuecoButton = findViewById(R.id.huecoButton)
         mFontButton = findViewById(R.id.fontButton)
         mYdsButton = findViewById(R.id.ydsButton)
         mFrenchButton = findViewById(R.id.frenchButton)
         mUiaaButton = findViewById(R.id.uiaaButton)
+    }
 
+    private fun setButtonListeners() {
         mHuecoButton.setOnClickListener(this)
         mFontButton.setOnClickListener(this)
         mYdsButton.setOnClickListener(this)
@@ -48,12 +54,20 @@ class ConverterActivity : AppCompatActivity(), View.OnClickListener {
         mUiaaButton.setOnClickListener(this)
     }
 
-    private fun gradeFinder(grade: String, gradeArray: Array<String>) {
-        for (i in gradeArray.indices) {
-            if (grade === gradeArray[i]) {
-                universalGrades.add(i)
-            }
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.huecoButton -> handleGradeConversion(GradeType.HUECO, mHuecoButton)
+            R.id.fontButton -> handleGradeConversion(GradeType.FONT, mFontButton)
+            R.id.ydsButton -> handleGradeConversion(GradeType.YDS, mYdsButton)
+            R.id.frenchButton -> handleGradeConversion(GradeType.FRENCH, mFrenchButton)
+            R.id.uiaaButton -> handleGradeConversion(GradeType.UIAA, mUiaaButton)
         }
+    }
+
+    private fun handleGradeConversion(gradeType: GradeType, button: TextView) {
+        animate(button)
+        val (gradeArray, gradeMenu) = gradeMapping[gradeType] ?: return
+        showGradePicker(gradeType, gradeArray, gradeMenu)
     }
 
     private fun animate(view: View) {
@@ -62,154 +76,66 @@ class ConverterActivity : AppCompatActivity(), View.OnClickListener {
         view.animate().scaleX(1f).scaleY(1f).start()
     }
 
-    override fun onClick(v: View) {
-        when (v.id) {
-            (R.id.huecoButton) -> {
-                animate(mHuecoButton)
-                gradeConverter(huecoMenu)
-            }
+    private fun showGradePicker(gradeType: GradeType, gradeArray: Array<String>, gradeMenu: Array<String>) {
+        val numberPicker = createNumberPicker(gradeMenu)
+        val dialogView = createDialogLayout(numberPicker)
 
-            (R.id.fontButton) -> {
-                animate(mFontButton)
-                gradeConverter(fontMenu)
-            }
-
-            (R.id.ydsButton) -> {
-                animate(mYdsButton)
-                gradeConverter(yds)
-            }
-
-            (R.id.frenchButton) -> {
-                animate(mFrenchButton)
-                gradeConverter(french)
-            }
-
-            (R.id.uiaaButton) -> {
-                animate(mUiaaButton)
-                gradeConverter(uiaa)
-            }
-        }
-    }
-
-    private fun gradeConverter(gradeMenu: Array<String>) {
-        val linearLayout = RelativeLayout(mContext)
-        val mGradeNumberPicker = NumberPicker(mContext)
-        mGradeNumberPicker.maxValue = gradeMenu.size - 1
-        mGradeNumberPicker.minValue = 0
-        mGradeNumberPicker.displayedValues = gradeMenu
-        mGradeNumberPicker.wrapSelectorWheel = true
-        mGradeNumberPicker.setOnValueChangedListener { picker, oldVal, newVal ->
-            universalGrades.clear()
-            if (gradeMenu.contentEquals(huecoMenu)) {
-                mHuecoButton.text = "Hueco: " + huecoMenu[newVal]
-                gradeFinder(huecoMenu[newVal], hueco)
-                if (universalGrades.size == 1) {
-                    mYdsButton.text = "Yds: " + yds[universalGrades[0]]
-                    mFontButton.text = "Font: " + font[universalGrades[0]]
-                    mFrenchButton.text = "French: " + french[universalGrades[0]]
-                    mUiaaButton.text = "UIAA: " + uiaa[universalGrades[0]]
-                } else {
-                    mYdsButton.text =
-                        "Yds: " + yds[universalGrades[0]] + " - " + yds[universalGrades[universalGrades.size - 1]]
-                    mFontButton.text =
-                        "Font: " + font[universalGrades[0]] + " - " + font[universalGrades[universalGrades.size - 1]]
-                    mFrenchButton.text =
-                        "French: " + french[universalGrades[0]] + " - " + french[universalGrades[universalGrades.size - 1]]
-                    mUiaaButton.text = "UIAA: " + uiaa[universalGrades[0]]
-                }
-            } else if (gradeMenu.contentEquals(fontMenu)) {
-                mFontButton.text = "Font: " + fontMenu[newVal]
-                gradeFinder(fontMenu[newVal], font)
-                if (universalGrades.size == 1) {
-                    mYdsButton.text = "Yds: " + yds[universalGrades[0]]
-                    mHuecoButton.text = "Hueco: " + hueco[universalGrades[0]]
-                    mFrenchButton.text = "French: " + french[universalGrades[0]]
-                    mUiaaButton.text = "UIAA: " + uiaa[universalGrades[0]]
-                } else {
-                    mYdsButton.text =
-                        "Yds: " + yds[universalGrades[0]] + " - " + yds[universalGrades[universalGrades.size - 1]]
-                    mHuecoButton.text =
-                        "Hueco: " + hueco[universalGrades[0]] + " - " + hueco[universalGrades[universalGrades.size - 1]]
-                    mFrenchButton.text =
-                        "French: " + french[universalGrades[0]] + " - " + french[universalGrades[universalGrades.size - 1]]
-                    mUiaaButton.text = "UIAA: " + uiaa[universalGrades[0]]
-                }
-            } else if (gradeMenu.contentEquals(yds)) {
-                mYdsButton.text = "YDS: " + yds[newVal]
-                gradeFinder(yds[newVal], yds)
-                if (universalGrades.size == 1) {
-                    mHuecoButton.text = "Hueco: " + hueco[universalGrades[0]]
-                    mFontButton.text = "Font: " + font[universalGrades[0]]
-                    mFrenchButton.text = "French: " + french[universalGrades[0]]
-                    mUiaaButton.text = "UIAA: " + uiaa[universalGrades[0]]
-                } else {
-                    mHuecoButton.text =
-                        "Hueco: " + hueco[universalGrades[0]] + " - " + hueco[universalGrades[universalGrades.size - 1]]
-                    mFontButton.text =
-                        "Font: " + font[universalGrades[0]] + " - " + font[universalGrades[universalGrades.size - 1]]
-                    mFrenchButton.text =
-                        "French: " + french[universalGrades[0]] + " - " + french[universalGrades[universalGrades.size - 1]]
-                    mUiaaButton.text = "UIAA: " + uiaa[universalGrades[0]]
-                }
-            } else if (gradeMenu.contentEquals(uiaa)) {
-                mUiaaButton.text = "UIAA: " + uiaa[newVal]
-                gradeFinder(uiaa[newVal], uiaa)
-                if (universalGrades.size == 1) {
-                    mHuecoButton.text = "Hueco: " + hueco[universalGrades[0]]
-                    mFontButton.text = "Font: " + font[universalGrades[0]]
-                    mFrenchButton.text = "French: " + french[universalGrades[0]]
-                    mYdsButton.text = "Yds: " + yds[universalGrades[0]]
-                } else {
-                    mHuecoButton.text =
-                        "Hueco: " + hueco[universalGrades[0]] + " - " + hueco[universalGrades[universalGrades.size - 1]]
-                    mFontButton.text =
-                        "Font: " + font[universalGrades[0]] + " - " + font[universalGrades[universalGrades.size - 1]]
-                    mFrenchButton.text =
-                        "French: " + french[universalGrades[0]] + " - " + french[universalGrades[universalGrades.size - 1]]
-                    mYdsButton.text =
-                        "Yds: " + yds[universalGrades[0]] + " - " + yds[universalGrades[universalGrades.size - 1]]
-                }
-            } else {
-                mFrenchButton.text = "French: " + french[newVal]
-                gradeFinder(french[newVal], french)
-                if (universalGrades.size == 1) {
-                    mYdsButton.text = "Yds: " + yds[universalGrades[0]]
-                    mFontButton.text = "Font: " + font[universalGrades[0]]
-                    mHuecoButton.text = "Hueco: " + hueco[universalGrades[0]]
-                    mUiaaButton.text = "UIAA: " + uiaa[universalGrades[0]]
-                } else {
-                    mYdsButton.text =
-                        "Yds: " + yds[universalGrades[0]] + " - " + yds[universalGrades[universalGrades.size - 1]]
-                    mFontButton.text =
-                        "Font: " + font[universalGrades[0]] + " - " + font[universalGrades[universalGrades.size - 1]]
-                    mHuecoButton.text =
-                        "Hueco: " + hueco[universalGrades[0]] + " - " + hueco[universalGrades[universalGrades.size - 1]]
-                    mUiaaButton.text = "UIAA: " + uiaa[universalGrades[0]]
-                }
-            }
-        }
-
-        val params = RelativeLayout.LayoutParams(gradeMenu.size - 1, gradeMenu.size - 1)
-        val numPickerParams = RelativeLayout.LayoutParams(
-            RelativeLayout.LayoutParams.WRAP_CONTENT,
-            RelativeLayout.LayoutParams.WRAP_CONTENT
-        )
-        numPickerParams.addRule(RelativeLayout.CENTER_HORIZONTAL)
-
-        linearLayout.layoutParams = params
-        linearLayout.addView(mGradeNumberPicker, numPickerParams)
-
-        val alertDialogBuilder = AlertDialog.Builder(this)
-
-        alertDialogBuilder.setTitle(getString(R.string.grade))
-        alertDialogBuilder.setView(linearLayout)
-        alertDialogBuilder
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.grade))
+            .setView(dialogView)
             .setCancelable(false)
-            .setPositiveButton(getString(R.string.ok)
-            ) { dialog, id -> }
-            .setNegativeButton(getString(R.string.cancel)
-            ) { dialog, id -> dialog.cancel() }
-        val alertDialog: AlertDialog = alertDialogBuilder.create()
-        alertDialog.show()
+            .setPositiveButton(getString(R.string.ok)) { _, _ -> updateGrades(gradeType, numberPicker.value) }
+            .setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
+            .show()
     }
+
+    private fun createNumberPicker(values: Array<String>): NumberPicker {
+        return NumberPicker(this).apply {
+            minValue = 0
+            maxValue = values.size - 1
+            displayedValues = values
+            wrapSelectorWheel = true
+        }
+    }
+
+    private fun createDialogLayout(numberPicker: NumberPicker): RelativeLayout {
+        return RelativeLayout(this).apply {
+            val params = RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+            )
+            params.addRule(RelativeLayout.CENTER_HORIZONTAL)
+            addView(numberPicker, params)
+        }
+    }
+
+    private fun updateGrades(gradeType: GradeType, selectedIndex: Int) {
+        universalGrades.clear()
+        val gradeMenu = gradeMapping[gradeType]?.second ?: return
+        gradeFinder(gradeMenu[selectedIndex], gradeMapping[gradeType]?.first ?: return)
+
+        // Update UI based on the universalGrades
+        updateGradeText()
+    }
+
+    private fun gradeFinder(selectedGrade: String, gradeArray: Array<String>) {
+        universalGrades.clear()
+        gradeArray.forEachIndexed { index, grade ->
+            if (grade == selectedGrade) universalGrades.add(index)
+        }
+    }
+
+    private fun updateGradeText() {
+        val displayValues = { array: Array<String>, indexes: List<Int> ->
+            if (indexes.size == 1) array[indexes[0]] else "${array[indexes.first()]} - ${array[indexes.last()]}"
+        }
+
+        mHuecoButton.text = "Hueco: ${displayValues(Constants.hueco, universalGrades)}"
+        mFontButton.text = "Font: ${displayValues(Constants.font, universalGrades)}"
+        mYdsButton.text = "YDS: ${displayValues(Constants.yds, universalGrades)}"
+        mFrenchButton.text = "French: ${displayValues(Constants.french, universalGrades)}"
+        mUiaaButton.text = "UIAA: ${displayValues(Constants.uiaa, universalGrades)}"
+    }
+
+    enum class GradeType { HUECO, FONT, YDS, FRENCH, UIAA }
 }

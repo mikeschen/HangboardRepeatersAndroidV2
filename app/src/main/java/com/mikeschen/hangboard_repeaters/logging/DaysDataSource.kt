@@ -1,5 +1,6 @@
 package com.mikeschen.hangboard_repeaters.logging
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -81,6 +82,7 @@ class DaysDataSource(context: Context?) {
         }
 
     // Count the number of logs in the database
+    @SuppressLint("Recycle")
     fun count(): Int {
         val sql = "SELECT * FROM ${MySQLiteHelper.TABLE_LOGS}"
         val recordCount = database!!.rawQuery(sql, null).count

@@ -19,11 +19,21 @@ class MainActivity : AppCompatActivity() {
         WorkoutSettingsManager(this)
     }
 
+    private lateinit var mHangTimeTextView: TextView
+    private lateinit var mPauseTimeTextView: TextView
+    private lateinit var mRestTimeTextView: TextView
+    private lateinit var mRoundNumberTextView: TextView
+    private lateinit var mSetsTimeTextView: TextView
     private lateinit var mHangEditText: EditText
     private lateinit var mPauseEditText: EditText
     private lateinit var mRoundsEditText: EditText
     private lateinit var mRestEditText: EditText
     private lateinit var mSetsEditText: EditText
+    private lateinit var mStartButton: Button
+    private lateinit var mPresetButton: Button
+    private lateinit var mPowerButton: Button
+    private lateinit var mSaveButton: Button
+    private lateinit var mCustButton: Button
 
     private lateinit var menuHelper: MenuHelper
 
@@ -33,21 +43,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         menuHelper = MenuHelper(this)
 
-        val mHangTimeTextView = findViewById<TextView>(R.id.hangTimeTextView)
-        val mPauseTimeTextView = findViewById<TextView>(R.id.pauseTimeTextView)
-        val mRestTimeTextView = findViewById<TextView>(R.id.restTimeTextView)
-        val mRoundNumberTextView = findViewById<TextView>(R.id.roundNumberTextView)
-        val mSetsTimeTextView = findViewById<TextView>(R.id.setsTimeTextView)
-        val mHangEditText = findViewById<EditText>(R.id.hangEditText)
-        val mPauseEditText = findViewById<EditText>(R.id.pauseEditText)
-        val mRoundsEditText = findViewById<EditText>(R.id.roundsEditText)
-        val mRestEditText = findViewById<EditText>(R.id.restEditText)
-        val mSetsEditText = findViewById<EditText>(R.id.setsEditText)
-        val mStartButton = findViewById<Button>(R.id.startButton)
-        val mPresetButton = findViewById<Button>(R.id.presetButton)
-        val mPowerButton = findViewById<Button>(R.id.powerButton)
-        val mSaveButton = findViewById<Button>(R.id.saveButton)
-        val mCustButton = findViewById<Button>(R.id.custButton)
+        mHangTimeTextView = findViewById(R.id.hangTimeTextView)
+        mPauseTimeTextView = findViewById(R.id.pauseTimeTextView)
+        mRestTimeTextView = findViewById(R.id.restTimeTextView)
+        mRoundNumberTextView = findViewById(R.id.roundNumberTextView)
+        mSetsTimeTextView = findViewById(R.id.setsTimeTextView)
+        mHangEditText = findViewById(R.id.hangEditText)
+        mPauseEditText = findViewById(R.id.pauseEditText)
+        mRoundsEditText = findViewById(R.id.roundsEditText)
+        mRestEditText = findViewById(R.id.restEditText)
+        mSetsEditText = findViewById(R.id.setsEditText)
+        mStartButton = findViewById(R.id.startButton)
+        mPresetButton = findViewById(R.id.presetButton)
+        mPowerButton = findViewById(R.id.powerButton)
+        mSaveButton = findViewById(R.id.saveButton)
+        mCustButton = findViewById(R.id.custButton)
 
         WorkoutPresetHandler.setupPresetButton(
             mPresetButton,

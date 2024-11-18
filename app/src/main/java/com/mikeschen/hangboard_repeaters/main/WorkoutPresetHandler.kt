@@ -1,8 +1,6 @@
 package com.mikeschen.hangboard_repeaters.main
 
-import android.content.ContentValues.TAG
 import android.content.Context
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -10,7 +8,6 @@ import android.widget.Toast
 object WorkoutPresetHandler {
     fun setupPresetButton(button: Button, hangEditText: EditText, pauseEditText: EditText, roundsEditText: EditText, restEditText: EditText, setsEditText: EditText, context: Context) {
         button.setOnClickListener {
-            Log.d(TAG, "MelloW!!!!! = world")
             button.setScaleX(0.96f);
             button.setScaleY(0.96f);
             button.animate().scaleX(1F).scaleY(1F).start();

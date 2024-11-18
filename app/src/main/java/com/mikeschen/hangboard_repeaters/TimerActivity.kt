@@ -14,7 +14,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mikeschen.hangboard_repeaters.helpers.MenuHelper
 import com.mikeschen.hangboard_repeaters.helpers.SoundManager
@@ -54,8 +53,6 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
     var soundSwitch: Boolean = true
     var countSoundSwitch: Boolean = false
     private var hasPlayedSound = false
-
-    val tag = "MyAppTag"
 
     var timerHandler: Handler = Handler(Looper.getMainLooper())
 
@@ -153,7 +150,7 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         setContentView(R.layout.activity_timer)
         menuHelper = MenuHelper(this)
         soundManager = SoundManager(this)
@@ -213,7 +210,6 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        Log.d(tag, "the text 🏃‍♀️: " + mStartButton.text)
         when (v.id) {
             R.id.startButton -> {
                 if (mStartButton.text == getString(R.string.logworkout)) {

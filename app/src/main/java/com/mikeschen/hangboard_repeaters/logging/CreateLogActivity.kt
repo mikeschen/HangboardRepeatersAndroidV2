@@ -1,146 +1,143 @@
 package com.mikeschen.hangboard_repeaters.logging
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.Date
 import com.mikeschen.hangboard_repeaters.R
 import com.mikeschen.hangboard_repeaters.helpers.Constants
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CreateLogActivity : AppCompatActivity(), View.OnClickListener {
+
+    // UI Elements
     private lateinit var mSizeEditText: EditText
-    private lateinit var mSizeTextView: TextView
     private lateinit var mWeightEditText: EditText
-    private lateinit var mWeightTextView: TextView
     private lateinit var mNotesEditText: EditText
-    private lateinit var mNotesTextView: TextView
     private lateinit var mLogButton: Button
     private lateinit var mLbsButton: RadioButton
     private lateinit var mKgButton: RadioButton
 
-    var hang: Int = 0
-    var pause: Int = 0
-    var rounds: Int = 0
-    var rest: Int = 0
-    var sets: Int = 0
-    private var datasource: DaysDataSource? = null
-    var weightUnit: String = "lbs"
-    var size: String? = null
-    var weight: String? = null
-    var sizeLog: String = ""
-    var weightLog: String = ""
-    var noteLog: String = ""
-    private lateinit var mSharedPreferences: SharedPreferences
-    private lateinit var mSharedPreferencesEditor: SharedPreferences.Editor
+    // Workout Parameters
+    private var hang: Int = 0
+    private var pause: Int = 0
+    private var rounds: Int = 0
+    private var rest: Int = 0
+    private var sets: Int = 0
 
-    val tag = "Log tag"
+    private var weightUnit: String = "lbs"
+
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_log)
 
-        mSizeEditText = findViewById(R.id.sizeEditText)
-        mSizeTextView = findViewById(R.id.sizeTextView)
-        mWeightEditText = findViewById(R.id.weightEditText)
-        mWeightTextView = findViewById(R.id.weightTextView)
-        mNotesEditText = findViewById(R.id.notesEditText)
-        mNotesTextView = findViewById(R.id.notesTextView)
-        mLogButton = findViewById(R.id.logButton)
-        mLbsButton = findViewById(R.id.lbsButton)
-        mKgButton = findViewById(R.id.kgButton)
+        // Initialize UI elements
+        initUI()
+        loadWorkoutParameters()
+        loadPreferences()
 
-        mSharedPreferences = getSharedPreferences("user_preferences", Context.MODE_PRIVATE)
-        mSharedPreferencesEditor = mSharedPreferences.edit()
         mLogButton.setOnClickListener(this)
         mLbsButton.setOnClickListener(this)
         mKgButton.setOnClickListener(this)
+    }
+
+    private fun initUI() {
+        mSizeEditText = findViewById(R.id.sizeEditText)
+        mWeightEditText = findViewById(R.id.weightEditText)
+        mNotesEditText = findViewById(R.id.notesEditText)
+        mLogButton = findViewById(R.id.logButton)
+        mLbsButton = findViewById(R.id.lbsButton)
+        mKgButton = findViewById(R.id.kgButton)
+    }
+
+    private fun loadWorkoutParameters() {
         hang = intent.getIntExtra("hang", 0)
         pause = intent.getIntExtra("pause", 0)
         rounds = intent.getIntExtra("rounds", 0)
         rest = intent.getIntExtra("rest", 0)
         sets = intent.getIntExtra("sets", 0)
-        size = mSharedPreferences.getString(Constants.KEY_USER_SIZE, null)
-        weight = mSharedPreferences.getString(Constants.KEY_USER_WEIGHT, null)
-        if (size != null) {
-            mSizeEditText.setText(size)
+    }
+
+    private fun loadPreferences() {
+        sharedPreferences = getSharedPreferences("user_preferences", Context.MODE_PRIVATE)
+        mSizeEditText.setText(sharedPreferences.getString(Constants.KEY_USER_SIZE, ""))
+        mWeightEditText.setText(sharedPreferences.getString(Constants.KEY_USER_WEIGHT, ""))
+        loadRadioButtonState()
+    }
+
+    private fun savePreferences() {
+        sharedPreferences.edit().apply {
+            putString(Constants.KEY_USER_SIZE, mSizeEditText.text.toString())
+            putString(Constants.KEY_USER_WEIGHT, mWeightEditText.text.toString())
+            apply()
         }
-        if (weight != null) {
-            mWeightEditText.setText(weight)
+    }
+
+    private fun loadRadioButtonState() {
+        mLbsButton.isChecked = sharedPreferences.getBoolean("Lbs", true)
+        mKgButton.isChecked = sharedPreferences.getBoolean("Kg", false)
+    }
+
+    private fun saveRadioButtonState() {
+        sharedPreferences.edit().apply {
+            putBoolean("Lbs", mLbsButton.isChecked)
+            putBoolean("Kg", mKgButton.isChecked)
+            apply()
         }
-        loadRadioButtons()
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-            (R.id.lbsButton) -> {
+            R.id.lbsButton -> {
                 weightUnit = "lbs"
-                saveRadioButtons()
+                saveRadioButtonState()
             }
-
-            (R.id.kgButton) -> {
+            R.id.kgButton -> {
                 weightUnit = "kg"
-                saveRadioButtons()
+                saveRadioButtonState()
             }
-
-            (R.id.logButton) -> {
-                datasource = DaysDataSource(this@CreateLogActivity)
-                datasource!!.open()
-                val dateFormat: DateFormat = SimpleDateFormat("MM/dd/yyyy - hh:mm a -")
-                val date = Date()
-                val formattedDate = dateFormat.format(date)
-                mSharedPreferencesEditor.putString(
-                    Constants.KEY_USER_SIZE,
-                    mSizeEditText.text.toString()
-                ).apply()
-                mSharedPreferencesEditor.putString(
-                    Constants.KEY_USER_WEIGHT,
-                    mWeightEditText.text.toString()
-                ).apply()
-                if (!mSizeEditText.text.toString().isEmpty()) {
-                    sizeLog = " Hold Size: " + mSizeEditText.text.toString() + "mm,"
-                }
-                if (!mWeightEditText.text.toString().isEmpty()) {
-                    weightLog = " Weight: " + mWeightEditText.text.toString() + weightUnit + ","
-                }
-                if (!mNotesEditText.text.toString().isEmpty()) {
-                    noteLog = " - Notes: " + mNotesEditText.text.toString()
-                }
-                val workOutStats =
-                    " Hang: $hang, Pause: $pause, Rounds: $rounds, Rest: $rest, Sets: $sets"
-                val logs = formattedDate + sizeLog + weightLog + workOutStats + noteLog
-                datasource!!.createLog(logs)
-                Log.d(tag, "the text 🌝♀️: " + datasource)
-                datasource!!.close()
-//                val intent1 = Intent(
-//                    this,
-//                    LogActivity::class.java
-//                )
-//                this.startActivity(intent1)
-            }
+            R.id.logButton -> handleLogCreation()
         }
     }
 
-    private fun saveRadioButtons() {
-        mSharedPreferences = getSharedPreferences("user_preferences", Context.MODE_PRIVATE)
-        val editor = mSharedPreferences.edit()
-        editor.putBoolean("Lbs", mLbsButton.isChecked)
-        editor.putBoolean("Kg", mKgButton.isChecked)
-        editor.apply()
+    private fun handleLogCreation() {
+        savePreferences()
+
+        val logs = generateLog()
+        DaysDataSource(this).apply {
+            open()
+            createLog(logs)
+            close()
+        }
+
+        startActivity(Intent(this, LogActivity::class.java))
     }
 
-    private fun loadRadioButtons() {
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        mLbsButton.isChecked = mSharedPreferences.getBoolean("Lbs", false)
-        mKgButton.isChecked = mSharedPreferences.getBoolean("Kg", false)
+    private fun generateLog(): String {
+        val dateFormat = SimpleDateFormat("MM/dd/yyyy - hh:mm a -", Locale.getDefault())
+        val date = dateFormat.format(Date())
+
+        val sizeLog = if (!mSizeEditText.text.isNullOrBlank()) {
+            " Hold Size: ${mSizeEditText.text}mm,"
+        } else ""
+
+        val weightLog = if (!mWeightEditText.text.isNullOrBlank()) {
+            " Weight: ${mWeightEditText.text}$weightUnit,"
+        } else ""
+
+        val noteLog = if (!mNotesEditText.text.isNullOrBlank()) {
+            " - Notes: ${mNotesEditText.text}"
+        } else ""
+
+        val workoutStats = " Hang: $hang, Pause: $pause, Rounds: $rounds, Rest: $rest, Sets: $sets"
+        return "$date$sizeLog$weightLog$workoutStats$noteLog"
     }
 }
