@@ -5,15 +5,15 @@ plugins {
 }
 
 android {
-    namespace = "com.mikeschen.hangboard_repeaters"
-    compileSdk = 34
+    namespace = "com.mikeschen.www.hangboardrepeaters"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.mikeschen.hangboard_repeaters"
+        applicationId = "com.mikeschen.www.hangboardrepeaters"
         minSdk = 28
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        targetSdk = 35
+        versionCode = 200
+        versionName = "200.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

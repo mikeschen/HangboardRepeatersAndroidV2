@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.mikeschen.hangboard_repeaters",
+  "applicationId": "com.mikeschen.www.hangboardrepeaters",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1,
-      "versionName": "1.0",
+      "versionCode": 200,
+      "versionName": "200.0",
       "outputFile": "app-release.apk"
     }
   ],
