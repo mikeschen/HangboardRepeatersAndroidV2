@@ -34,6 +34,7 @@ class LogActivity : AppCompatActivity() {
         mCompletedTextView.text = getString(R.string.completedworkouts, "", recordCount)
 
         val values: MutableList<Days> = datasource?.allLogs?.toMutableList() ?: mutableListOf()
+        values.reverse()
         adapter = DaysAdapter(this, values) { position -> deleteOneItem(position) }
 
         recyclerView.layoutManager = LinearLayoutManager(this)
