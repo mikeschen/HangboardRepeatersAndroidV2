@@ -23,6 +23,8 @@ class LogActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log)
+        supportActionBar?.hide()
+
         mContext = this
         mCompletedTextView = findViewById(R.id.completedTextView)
         val deleteButton = findViewById<View>(R.id.deleteButton)

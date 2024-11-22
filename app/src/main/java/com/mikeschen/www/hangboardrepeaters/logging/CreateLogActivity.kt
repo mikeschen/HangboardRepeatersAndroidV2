@@ -36,6 +36,7 @@ class CreateLogActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_log)
+        supportActionBar?.hide()
 
         // Initialize UI elements
         initUI()

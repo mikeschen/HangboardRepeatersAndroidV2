@@ -203,7 +203,7 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun fade(fadeText: TextView?) {
         fadeText!!.animate()
-            .alpha(0.3f)
+            .alpha(0.4f)
             .scaleX(0.8f)
             .scaleY(0.8f)
             .setDuration(500)

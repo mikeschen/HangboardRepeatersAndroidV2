@@ -26,6 +26,7 @@
         <activity
             android:name=".TimerActivity"
             android:exported="true"
+            android:configChanges="orientation|screenSize"
             >
         </activity>
         <activity

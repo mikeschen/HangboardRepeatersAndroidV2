@@ -9,6 +9,12 @@
     <color name="colorSecondary">#FF6F61</color> <!-- Softened red-pink -->
     <color name="colorSecondaryVariant">#FF8A65</color> <!-- Lighter, warm variant for highlights -->
 
+    <!-- New Color Additions -->
+    <color name="colorRed">#FF0000</color> <!-- Vibrant pure red -->
+    <color name="colorGreen">#00FF00</color> <!-- Vibrant pure green -->
+    <color name="colorYellow">#FFFF00</color> <!-- Vibrant pure yellow -->
+    <color name="colorBlue">#0000FF</color> <!-- Vibrant pure blue -->
+    <color name="colorPurple">#A020F0</color>
     <!-- Accent Colors -->
     <color name="colorAccent">#007BA7</color> <!-- Match primary color for consistency -->
 
