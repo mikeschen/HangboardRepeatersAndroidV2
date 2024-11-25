@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors -->
+    <color name="colorPrimary">#005073</color> <!-- Darkened for dark mode -->
+    <color name="colorPrimaryDark">#002A3D</color> <!-- Even darker variant for emphasis -->
+    <color name="colorPrimaryLight">#338CAD</color> <!-- Slightly softened for contrast -->
+
+    <!-- Secondary Colors -->
+    <color name="colorSecondary">#FF4F4C</color> <!-- Slightly muted for dark backgrounds -->
+    <color name="colorSecondaryVariant">#FF6D5E</color> <!-- Balanced for highlights -->
+
+    <!-- New Color Additions -->
+    <color name="colorRed">#FF4D4D</color> <!-- Softer red to avoid being too harsh -->
+    <color name="colorGreen">#4CFF4C</color> <!-- Bright green for visibility -->
+    <color name="colorYellow">#FFFF4D</color> <!-- Bright yellow for contrast -->
+    <color name="colorBlue">#4D4DFF</color> <!-- Brightened blue for visibility -->
+    <color name="colorPurple">#C080FF</color> <!-- Softer purple to reduce strain -->
+
+    <!-- Accent Colors -->
+    <color name="colorAccent">#338CAD</color> <!-- Matches adjusted primary light -->
+
+    <!-- Text Colors -->
+    <color name="colorPrimaryText">#FAFAFA</color> <!-- Light text for readability -->
+    <color name="colorSecondaryText">#9E9E9E</color> <!-- Subdued light text for less important info -->
+
+    <!-- Backgrounds -->
+    <color name="colorOffWhite">#121212</color> <!-- Dark background for dark mode -->
+    <color name="black">#000000</color> <!-- Pure black for deep contrast -->
+
+    <!-- Variant for Secondary Elements -->
+    <color name="colorPrimaryVariant">#29434E</color> <!-- Muted darker gray-blue for dark mode UI -->
+</resources>
