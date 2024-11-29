@@ -11,7 +11,7 @@ class SoundManager(context: Context) {
     val pauseChimeId: Int
     val restWarningId: Int
     val endAlarmId: Int
-    val threeSecondsId: Int
+    val fiveSecondsId: Int
 
     init {
         val audioAttributes = AudioAttributes.Builder()
@@ -27,8 +27,7 @@ class SoundManager(context: Context) {
         pauseChimeId = ourSounds.load(context, R.raw.pausechime, 1)
         restWarningId = ourSounds.load(context, R.raw.restchime, 1)
         endAlarmId = ourSounds.load(context, R.raw.countdownchime, 1)
-        threeSecondsId = ourSounds.load(context, R.raw.threesecondscountdown, 1)
-
+        fiveSecondsId = ourSounds.load(context, R.raw.fivesecondschime, 1)
     }
 
     fun playSound(soundId: Int, volume: Float = 1.0f) {

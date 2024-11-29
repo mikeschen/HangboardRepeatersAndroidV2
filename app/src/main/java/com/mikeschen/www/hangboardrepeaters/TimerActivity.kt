@@ -63,12 +63,13 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
             val countdownDisplay = currentTimer - seconds
             val minutes = countdownDisplay / 60
             val secondsDisplay = countdownDisplay % 60
+            val countdownStart = 5;
 
-            if (countSoundSwitch && countdownDisplay == 3  && !hasPlayedSound) {
-                soundManager.playSound(soundManager.threeSecondsId, 0.9f)
+            if (countSoundSwitch && countdownDisplay == countdownStart  && !hasPlayedSound) {
+                soundManager.playSound(soundManager.fiveSecondsId, 0.9f)
                 hasPlayedSound = true
             }
-            if (countdownDisplay != 3) {
+            if (countdownDisplay != countdownStart) {
                 hasPlayedSound = false
             }
             if (seconds == currentTimer) {
