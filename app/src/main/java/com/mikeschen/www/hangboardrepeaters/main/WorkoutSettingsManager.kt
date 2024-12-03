@@ -63,8 +63,9 @@ class WorkoutSettingsManager(context: Context) {
         setsEditText.setText(String.format(Locale.US, "%d", sharedPreferences.getInt(Constants.KEY_USER_SETS, 0)))
     }
 
-    fun saveSettings(hang: String, pause: String, rounds: String, rest: String, sets: String) {
+    fun saveSettings(name: String, hang: String, pause: String, rounds: String, rest: String, sets: String) {
         sharedPreferences.edit().apply {
+            putString(Constants.SAVED_USER_NAME, name)
             putString(Constants.SAVED_USER_HANG, hang)
             putString(Constants.SAVED_USER_PAUSE, pause)
             putString(Constants.SAVED_USER_ROUNDS, rounds)

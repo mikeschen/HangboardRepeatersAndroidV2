@@ -1,5 +1,6 @@
 package com.mikeschen.www.hangboardrepeaters.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,6 +14,7 @@ import com.mikeschen.www.hangboardrepeaters.helpers.AlertDialogHelper
 import com.mikeschen.www.hangboardrepeaters.helpers.MenuHelper
 import com.mikeschen.www.hangboardrepeaters.R
 import com.mikeschen.www.hangboardrepeaters.TimerActivity
+import com.mikeschen.www.hangboardrepeaters.helpers.Constants
 
 class MainActivity : AppCompatActivity() {
     private val workoutSettingsManager by lazy {
@@ -54,10 +56,15 @@ class MainActivity : AppCompatActivity() {
         mRestEditText = findViewById(R.id.restEditText)
         mSetsEditText = findViewById(R.id.setsEditText)
         mStartButton = findViewById(R.id.startButton)
-        mPresetButton = findViewById(R.id.presetButton)
         mPowerButton = findViewById(R.id.powerButton)
         mSaveButton = findViewById(R.id.saveButton)
         mCustButton = findViewById(R.id.custButton)
+        mPresetButton = findViewById(R.id.presetButton)
+
+        val sharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val name = sharedPreferences.getString(Constants.SAVED_USER_NAME, "Custom")
+
+        mCustButton.text = name
 
         WorkoutPresetHandler.setupPresetButton(
             mPresetButton,
@@ -124,7 +131,8 @@ class MainActivity : AppCompatActivity() {
                 mPauseEditText,
                 mRoundsEditText,
                 mRestEditText,
-                mSetsEditText
+                mSetsEditText,
+                mCustButton
             )
         }
 

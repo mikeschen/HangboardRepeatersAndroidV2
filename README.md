@@ -1,14 +1,18 @@
 # HangBoardRepeatersAndroid
 
-Rock Climbing Interval Timer for a hangboard/fingerboard that list seconds for hanging and resting to train fingers.
+Rock Climbing Interval Timer for a hangboard/fingerboard that lists seconds for hanging and resting to train finger strength.
+
+---
+
 ![Screenshot_20240507_125642_Hangboard Repeaters](https://github.com/mikeschen/HangBoardRepeatersAndroid/assets/9831452/a417a63e-f89e-48e0-9c4f-43250e58851f)
 ![Screenshot_20240507_125627_Hangboard Repeaters](https://github.com/mikeschen/HangBoardRepeatersAndroid/assets/9831452/91e6f7fa-19c0-48c5-98db-a226528f36e7)
 ![Screenshot_20240507_125454_Hangboard Repeaters](https://github.com/mikeschen/HangBoardRepeatersAndroid/assets/9831452/66aae583-56ce-464f-9bd5-f55a8d53e57d)
 ![Screenshot_20240507_125444_Hangboard Repeaters](https://github.com/mikeschen/HangBoardRepeatersAndroid/assets/9831452/0c7ae1e0-57fc-460e-a560-db8903cb220c)
 
+---
 
-#### Authors: Michael Schennum
-<https://www.mikeschen.com> | <mikeschenphoto@gmail.com>
+#### Author: Michael Schennum
+<https://www.mikeschen.com> | <mike@mikeschen.com>
 
 ## Description
 
@@ -16,7 +20,7 @@ An interval timer for users to hang on a rock climbing hangboard for different a
 
 ## Technologies
 
-Android, Java, XML, SQLite
+Android, Kotlin, XML, SQLite
 
 ## Setup
 

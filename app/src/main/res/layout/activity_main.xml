@@ -194,7 +194,7 @@
             android:textStyle="bold"
             android:text="@string/defaultbutton"
             android:textColor="@color/colorSecondaryVariant"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/custButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/powerButton"/>
 
@@ -207,9 +207,9 @@
             android:textStyle="bold"
             android:text="@string/powerbutton"
             android:textColor="@color/colorPrimaryLight"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/custButton"
             app:layout_constraintStart_toEndOf="@id/presetButton"
-            app:layout_constraintEnd_toStartOf="@id/custButton"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <!-- Button 3 -->
         <androidx.appcompat.widget.AppCompatButton
@@ -220,7 +220,7 @@
             android:text="@string/custbutton"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/powerButton"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/saveButton"/>
 
         <!-- Button 4 -->
@@ -236,6 +236,7 @@
             app:layout_constraintStart_toEndOf="@id/custButton"
             app:layout_constraintEnd_toEndOf="parent"/>
 
+        <!-- Start Button -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/startButton"
             android:layout_width="0dp"
@@ -252,7 +253,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintWidth_percent="0.6"
             app:layout_constraintHeight_percent="0.1" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

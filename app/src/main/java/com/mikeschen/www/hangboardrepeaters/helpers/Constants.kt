@@ -8,6 +8,7 @@ object Constants {
     const val KEY_USER_SETS = "sets"
     const val KEY_USER_SIZE = "size"
     const val KEY_USER_WEIGHT = "weight"
+    const val SAVED_USER_NAME = "savedName"
     const val SAVED_USER_HANG = "savedHang"
     const val SAVED_USER_PAUSE = "savedPause"
     const val SAVED_USER_ROUNDS = "savedRounds"
