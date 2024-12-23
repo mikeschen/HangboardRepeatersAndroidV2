@@ -12,6 +12,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -35,6 +36,9 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mCountSoundButton: ImageButton
     private lateinit var menuHelper: MenuHelper
     private lateinit var soundManager: SoundManager
+    private lateinit var mHangProgressBar: ProgressBar
+    private lateinit var mPauseProgressBar: ProgressBar
+    private lateinit var mRestProgressBar: ProgressBar
 
     var timerText: TextView? = null
     var timerTextView: TextView? = null
@@ -60,6 +64,8 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
         override fun run() {
             val millis = System.currentTimeMillis() - startTime
             val seconds = (millis / 1000).toInt()
+            mHangProgressBar.progress = seconds
+            mHangProgressBar.max = hang
             val countdownDisplay = currentTimer - seconds
             val minutes = countdownDisplay / 60
             val secondsDisplay = countdownDisplay % 60
@@ -171,6 +177,9 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
         mStartButton = findViewById(R.id.startButton)
         mSoundButton = findViewById(R.id.soundButton)
         mCountSoundButton = findViewById(R.id.countSoundButton)
+        mHangProgressBar = findViewById(R.id.hangProgressBar)
+        mHangProgressBar = findViewById(R.id.pauseProgressBar)
+        mHangProgressBar = findViewById(R.id.restProgressBar)
 
         mStartButton.setOnClickListener(this)
         mSoundButton.setOnClickListener(this)
@@ -188,9 +197,6 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
         rounds = intent.getIntExtra("rounds", 0)
         rest = intent.getIntExtra("rest", 0)
         sets = intent.getIntExtra("sets", 0)
-        //Mike TODO: see if I need to fix below
-//        timerText = findViewById(R.id.hangTextView)
-//        timerTextView = findViewById(R.id.hangText)
         currentTimer = hang
         mRoundsText.text = "1/$rounds"
         mSetsText.text = "1/$sets"
@@ -205,8 +211,8 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
     private fun fade(fadeText: TextView?) {
         fadeText!!.animate()
             .alpha(0.4f)
-            .scaleX(0.8f)
-            .scaleY(0.8f)
+            .scaleX(0.9f)
+            .scaleY(0.9f)
             .setDuration(500)
     }
 
