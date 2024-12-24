@@ -84,10 +84,11 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
             if (countdownDisplay != countdownStart) {
                 hasPlayedSound = false
             }
-            if (seconds == currentTimer) {
+            if (countdownDisplay <= 0) {
                 timerTextView!!.text = String.format("%d:%02d", 0, 0)
                 fade(timerText)
                 fade(timerTextView)
+                timerHandler.removeCallbacks(this)
                 timerHandler.postDelayed(this, 500)
                 startTime = System.currentTimeMillis()
                 i++
@@ -135,6 +136,7 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
                     fade(mRoundTextView)
                     fade(mRoundsText)
                     mStartButton.text = getString(R.string.logworkout)
+                    mHangProgressBar.progress = 0
                 }
             } else {
                 timerText!!.animate()
