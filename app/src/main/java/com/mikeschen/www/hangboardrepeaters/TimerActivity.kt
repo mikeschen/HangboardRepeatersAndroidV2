@@ -21,24 +21,29 @@ import com.mikeschen.www.hangboardrepeaters.helpers.SoundManager
 import com.mikeschen.www.hangboardrepeaters.logging.CreateLogActivity
 
 class TimerActivity : AppCompatActivity(), View.OnClickListener {
+    // Text
     private lateinit var mHangTextView: TextView
     private lateinit var mPauseTextView: TextView
     private lateinit var mRestTextView: TextView
     private lateinit var mRoundTextView: TextView
     private lateinit var mSetsTextView: TextView
+    // Timers
     private lateinit var mHangText: TextView
     private lateinit var mPauseText: TextView
     private lateinit var mRestText: TextView
     private lateinit var mSetsText: TextView
     private lateinit var mRoundsText: TextView
+    // Buttons
     private lateinit var mStartButton: Button
     private lateinit var mSoundButton: ImageButton
     private lateinit var mCountSoundButton: ImageButton
-    private lateinit var menuHelper: MenuHelper
-    private lateinit var soundManager: SoundManager
+    // Progress Bars
     private lateinit var mHangProgressBar: ProgressBar
     private lateinit var mPauseProgressBar: ProgressBar
     private lateinit var mRestProgressBar: ProgressBar
+    // Other
+    private lateinit var menuHelper: MenuHelper
+    private lateinit var soundManager: SoundManager
 
     var timerText: TextView? = null
     var timerTextView: TextView? = null
@@ -54,6 +59,7 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
     var roundCounter: Int = 2
     var newWorkoutSwitch: Boolean = true
     var flipState: Boolean = true
+    var isRest: Boolean = false
     var soundSwitch: Boolean = true
     var countSoundSwitch: Boolean = false
     private var hasPlayedSound = false
@@ -64,12 +70,12 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
         override fun run() {
             val millis = System.currentTimeMillis() - startTime
             val seconds = (millis / 1000).toInt()
-            mHangProgressBar.progress = seconds
-            mHangProgressBar.max = hang
             val countdownDisplay = currentTimer - seconds
             val minutes = countdownDisplay / 60
             val secondsDisplay = countdownDisplay % 60
             val countdownStart = 5;
+
+            updateProgressBars(currentTimer, seconds, isRest)
 
             if (countSoundSwitch && countdownDisplay == countdownStart  && !hasPlayedSound) {
                 soundManager.playSound(soundManager.fiveSecondsId, 0.9f)
@@ -106,8 +112,10 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
                     flipState = true
                     mRoundsText.text = "$roundCounter/$rounds"
                     roundCounter++
+                    isRest = false
                 }
                 if (i == rounds * 2 - 1) {
+                    isRest = true
                     roundCounter = 1
                     mRoundsText.text = "$roundCounter/$rounds"
                     currentTimer = rest
@@ -178,8 +186,8 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
         mSoundButton = findViewById(R.id.soundButton)
         mCountSoundButton = findViewById(R.id.countSoundButton)
         mHangProgressBar = findViewById(R.id.hangProgressBar)
-        mHangProgressBar = findViewById(R.id.pauseProgressBar)
-        mHangProgressBar = findViewById(R.id.restProgressBar)
+        mPauseProgressBar = findViewById(R.id.pauseProgressBar)
+        mRestProgressBar = findViewById(R.id.restProgressBar)
 
         mStartButton.setOnClickListener(this)
         mSoundButton.setOnClickListener(this)
@@ -200,6 +208,24 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
         currentTimer = hang
         mRoundsText.text = "1/$rounds"
         mSetsText.text = "1/$sets"
+
+        mHangProgressBar.max = hang
+        mPauseProgressBar.max = pause
+        mRestProgressBar.max = rest
+    }
+
+    private fun updateProgressBars(currentTimer: Int, seconds: Int, isRest: Boolean) {
+        // Reset all progress bars
+        mHangProgressBar.progress = 0
+        mPauseProgressBar.progress = 0
+        mRestProgressBar.progress = 0
+
+        // Update the appropriate progress bar
+        when {
+            currentTimer == hang && flipState -> mHangProgressBar.progress = seconds
+            currentTimer == pause && !flipState && !isRest -> mPauseProgressBar.progress = seconds
+            isRest -> mRestProgressBar.progress = seconds
+        }
     }
 
     private fun animateButton() {
