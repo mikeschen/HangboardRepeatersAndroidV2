@@ -12,8 +12,8 @@ android {
         applicationId = "com.mikeschen.www.hangboardrepeaters"
         minSdk = 28
         targetSdk = 35
-        versionCode = 206
-        versionName = "206"
+        versionCode = 207
+        versionName = "207"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
