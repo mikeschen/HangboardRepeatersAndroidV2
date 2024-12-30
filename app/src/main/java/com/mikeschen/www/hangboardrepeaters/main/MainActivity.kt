@@ -97,11 +97,11 @@ class MainActivity : AppCompatActivity() {
 
         mStartButton.setOnClickListener {
             try {
-                val hangTime = mHangEditText.text.toString().toInt()
-                val pauseTime = mPauseEditText.text.toString().toInt()
-                val rounds = mRoundsEditText.text.toString().toInt()
-                val restTime = mRestEditText.text.toString().toInt()
-                val sets = mSetsEditText.text.toString().toInt()
+                val hangTime = mHangEditText.text.toString()
+                val pauseTime = mPauseEditText.text.toString()
+                val rounds = mRoundsEditText.text.toString()
+                val restTime = mRestEditText.text.toString()
+                val sets = mSetsEditText.text.toString()
 
                 workoutSettingsManager.saveWorkoutParameters(hangTime, pauseTime, rounds, restTime, sets)
 

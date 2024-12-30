@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.widget.EditText
 import android.widget.RadioButton
 import com.mikeschen.www.hangboardrepeaters.helpers.Constants
-import java.util.Locale
 
 class WorkoutSettingsManager(context: Context) {
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
@@ -33,18 +32,18 @@ class WorkoutSettingsManager(context: Context) {
     }
 
     fun saveWorkoutParameters(
-        hangTime: Int,
-        pauseTime: Int,
-        rounds: Int,
-        restTime: Int,
-        sets: Int
+        hangTime: String,
+        pauseTime: String,
+        rounds: String,
+        restTime: String,
+        sets: String
     ) {
         sharedPreferences.edit().apply {
-            putInt(Constants.KEY_USER_HANG, hangTime)
-            putInt(Constants.KEY_USER_PAUSE, pauseTime)
-            putInt(Constants.KEY_USER_ROUNDS, rounds)
-            putInt(Constants.KEY_USER_REST, restTime)
-            putInt(Constants.KEY_USER_SETS, sets)
+            putString(Constants.USER_HANG, hangTime)
+            putString(Constants.USER_PAUSE, pauseTime)
+            putString(Constants.USER_ROUNDS, rounds)
+            putString(Constants.USER_REST, restTime)
+            putString(Constants.USER_SETS, sets)
             apply()
         }
     }
@@ -56,11 +55,19 @@ class WorkoutSettingsManager(context: Context) {
         restEditText: EditText,
         setsEditText: EditText
     ) {
-        hangEditText.setText(String.format(Locale.US, "%d", sharedPreferences.getInt(Constants.KEY_USER_HANG, 0)))
-        pauseEditText.setText(String.format(Locale.US, "%d", sharedPreferences.getInt(Constants.KEY_USER_PAUSE, 0)))
-        roundsEditText.setText(String.format(Locale.US, "%d", sharedPreferences.getInt(Constants.KEY_USER_ROUNDS, 0)))
-        restEditText.setText(String.format(Locale.US, "%d", sharedPreferences.getInt(Constants.KEY_USER_REST, 0)))
-        setsEditText.setText(String.format(Locale.US, "%d", sharedPreferences.getInt(Constants.KEY_USER_SETS, 0)))
+        hangEditText.setText(getPreferenceValue(Constants.USER_HANG))
+        pauseEditText.setText(getPreferenceValue(Constants.USER_PAUSE))
+        roundsEditText.setText(getPreferenceValue(Constants.USER_ROUNDS))
+        restEditText.setText(getPreferenceValue(Constants.USER_REST))
+        setsEditText.setText(getPreferenceValue(Constants.USER_SETS))
+    }
+
+    private fun getPreferenceValue(key: String): String {
+        return try {
+            sharedPreferences.getString(key, "") ?: ""
+        } catch (e: ClassCastException) {
+            sharedPreferences.getInt(key, 0).toString()
+        }
     }
 
     fun saveSettings(name: String, hang: String, pause: String, rounds: String, rest: String, sets: String) {

@@ -1,11 +1,11 @@
 package com.mikeschen.www.hangboardrepeaters.helpers
 
 object Constants {
-    const val KEY_USER_HANG = "hang"
-    const val KEY_USER_PAUSE = "pause"
-    const val KEY_USER_ROUNDS = "rounds"
-    const val KEY_USER_REST = "rest"
-    const val KEY_USER_SETS = "sets"
+    const val USER_HANG = "hang"
+    const val USER_PAUSE = "pause"
+    const val USER_ROUNDS = "rounds"
+    const val USER_REST = "rest"
+    const val USER_SETS = "sets"
     const val KEY_USER_SIZE = "size"
     const val KEY_USER_WEIGHT = "weight"
     const val SAVED_USER_NAME = "savedName"

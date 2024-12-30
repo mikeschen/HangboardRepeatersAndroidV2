@@ -154,13 +154,13 @@ class TimerActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     companion object {
-        fun newIntent(context: Context, hang: Int, pause: Int, rounds: Int, rest: Int, sets: Int): Intent {
+        fun newIntent(context: Context, hang: String, pause: String, rounds: String, rest: String, sets: String): Intent {
             return Intent(context, TimerActivity::class.java).apply {
-                putExtra("hang", hang)
-                putExtra("pause", pause)
-                putExtra("rounds", rounds)
-                putExtra("rest", rest)
-                putExtra("sets", sets)
+                putExtra("hang", hang.toInt())
+                putExtra("pause", pause.toInt())
+                putExtra("rounds", rounds.toInt())
+                putExtra("rest", rest.toInt())
+                putExtra("sets", sets.toInt())
             }
         }
     }
