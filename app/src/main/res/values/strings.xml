@@ -4,9 +4,9 @@
 
     <string name="hangtime">HANG TIME</string>
     <string name="pausetime">PAUSE TIME</string>
-    <string name="numberrounds">NUMBER OF ROUNDS</string>
+    <string name="numberrounds">ROUNDS</string>
     <string name="resttime">REST TIME</string>
-    <string name="numbersets">NUMBER OF SETS</string>
+    <string name="numbersets">SETS</string>
     <string name="defaultbutton">DEFAULT</string>
     <string name="powerbutton">POWER</string>
     <string name="savebutton">SAVE</string>
